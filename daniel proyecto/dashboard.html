@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SportStock Pro - Dashboard</title>
+  <link rel="stylesheet" href="CSS/styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+
+<div class="app">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <div class="brand-icon">
+        <img src="assets/logo.png" alt="Logo">
+      </div>
+      <div>
+        <h2>SportStock Pro</h2>
+        <span>Admin Panel</span>
+      </div>
+    </div>
+
+    <nav>
+      <button class="nav-item active" id="nav-inicio" onclick="showPage('inicio')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        Inicio
+      </button>
+      <button class="nav-item" id="nav-inventario" onclick="showPage('inventario')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+        Gestión de Inventario
+      </button>
+      <button class="nav-item" id="nav-usuarios" onclick="showPage('usuarios')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        Usuarios
+      </button>
+    </nav>
+
+    <a href="index.html" class="sidebar-logout">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+      Cerrar Sesión
+    </a>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <!-- ======================== PÁGINA: INICIO ======================== -->
+    <div class="page active" id="page-inicio">
+      <div class="page-header">
+        <h1>Panel de Control</h1>
+        <p>Bienvenido al sistema de gestión de inventario</p>
+      </div>
+
+      <!-- 4 tarjetas de estadísticas -->
+      <div class="cards-row">
+
+        <div class="stat-card">
+          <div class="info">
+            <p>Total Productos</p>
+            <h2>640</h2>
+            <div class="trend">↗ +12% vs mes anterior</div>
+          </div>
+          <div class="stat-icon blue">
+            <i class="fa-solid fa-box"></i>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="info">
+            <p>Categorías</p>
+            <h2>8</h2>
+            <div class="trend">↗ 8 categorías activas</div>
+          </div>
+          <div class="stat-icon purple">
+            <i class="fa-solid fa-layer-group"></i>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="info">
+            <p>Stock Bajo</p>
+            <h2>12</h2>
+            <div class="trend warn">↗ Requiere atención</div>
+          </div>
+          <div class="stat-icon orange">
+            <i class="fa-solid fa-triangle-exclamation"></i>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="info">
+            <p>Valor Total</p>
+            <h2>$48.750,5</h2>
+            <div class="trend">↗ +8% este mes</div>
+          </div>
+          <div class="stat-icon green">
+            <i class="fa-solid fa-dollar-sign"></i>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Parte inferior -->
+      <div class="bottom-grid">
+
+        <div class="card">
+          <div class="card-title">🛒 Productos con Mayor Stock</div>
+          <div class="product-row">
+            <div class="rank">1</div>
+            <div class="product-info"><strong>Botella Deportiva 1L</strong><span>Accesorios</span></div>
+            <div class="product-qty">120<small>unidades</small></div>
+          </div>
+          <div class="product-row">
+            <div class="rank">2</div>
+            <div class="product-info"><strong>Pelotas de Tenis (Pack 3)</strong><span>Tenis</span></div>
+            <div class="product-qty">94<small>unidades</small></div>
+          </div>
+          <div class="product-row">
+            <div class="rank">3</div>
+            <div class="product-info"><strong>Calcetines Running (Pack 3)</strong><span>Running</span></div>
+            <div class="product-qty">85<small>unidades</small></div>
+          </div>
+          <div class="product-row">
+            <div class="rank">4</div>
+            <div class="product-info"><strong>Gafas de Natación</strong><span>Natación</span></div>
+            <div class="product-qty">67<small>unidades</small></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">↗ Resumen de Actividad</div>
+          <div class="activity-item">
+            <div>
+              <p class="label">Productos Registrados</p>
+              <p class="value">247</p>
+            </div>
+            <div class="stat-icon blue">
+              <i class="fa-solid fa-box"></i>
+            </div>
+          </div>
+          <div class="activity-item">
+            <div>
+              <p class="label">Actualizaciones Hoy</p>
+              <p class="value">18</p>
+            </div>
+            <div class="stat-icon purple">
+              <i class="fa-solid fa-layer-group"></i>
+            </div>
+          </div>
+          <div class="activity-item">
+            <div>
+              <p class="label">Alertas Pendientes</p>
+              <p class="value">12</p>
+            </div>
+            <div class="stat-icon orange">
+              <i class="fa-solid fa-triangle-exclamation"></i>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <!-- FIN PÁGINA INICIO -->
+
+    <!-- ======================== PÁGINA: INVENTARIO ======================== -->
+    <div class="page" id="page-inventario">
+      <div class="page-header">
+        <h1>Gestión de Inventario</h1>
+        <p>Administra todos los productos del almacén deportivo</p>
+      </div>
+
+      <div class="toolbar">
+        <div class="search-box">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input type="text" id="searchInput" placeholder="Buscar por código, nombre o categoría..." oninput="filterTable()" />
+        </div>
+        <button class="btn-add" onclick="openModal()">+ Registrar Artículo</button>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Código</th>
+              <th>Nombre del Artículo</th>
+              <th>Categoría</th>
+              <th>Cantidad</th>
+              <th>Precio</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="tableBody"></tbody>
+        </table>
+        <div class="table-footer" id="tableFooter">Mostrando 12 de 12 productos</div>
+      </div>
+    </div>
+    <!-- FIN PÁGINA INVENTARIO -->
+
+    <!-- ======================== PÁGINA: USUARIOS ======================== -->
+    <div class="page" id="page-usuarios">
+      <div class="page-header">
+        <h1>Gestión de Usuarios</h1>
+        <p>Administra los usuarios del sistema</p>
+      </div>
+
+      <div class="users-cards">
+        <div class="user-stat">
+          <div class="info"><p>Total Usuarios</p><h2 id="totalUsuarios">3</h2></div>
+          <div class="stat-icon blue"><i class="fa-solid fa-user-group"></i></div>
+        </div>
+        <div class="user-stat">
+          <div class="info"><p>Administradores</p><h2 id="totalAdmins">1</h2></div>
+          <div class="stat-icon purple"><i class="fa-solid fa-shield"></i></div>
+        </div>
+        <div class="user-stat">
+          <div class="info"><p>Usuarios Activos</p><h2 id="totalActivos">3</h2></div>
+          <div class="stat-icon green"><i class="fa-solid fa-user-plus"></i></div>
+        </div>
+      </div>
+
+      <div class="user-list-header">
+        <h3>Lista de Usuarios</h3>
+        <button class="btn-add" onclick="openUserModal()">👤 Agregar Usuario</button>
+      </div>
+
+      <div id="userList"></div>
+    </div>
+    <!-- FIN PÁGINA USUARIOS -->
+
+  </main>
+</div>
+
+<!-- MODAL: REGISTRAR / EDITAR PRODUCTO -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <h2 id="modalTitle">Registrar Nuevo Artículo</h2>
+    <div class="form-group">
+      <label>Nombre del Producto <span class="required">*</span></label>
+      <input type="text" id="mNombre" placeholder="Ej: Balón de Fútbol Profesional" />
+    </div>
+    <div class="form-group">
+      <label>Categoría <span class="required">*</span></label>
+      <select id="mCategoria">
+        <option value="">Selecciona una categoría</option>
+        <option>Fútbol</option>
+        <option>Baloncesto</option>
+        <option>Tenis</option>
+        <option>Running</option>
+        <option>Natación</option>
+        <option>Gimnasio</option>
+        <option>Ciclismo</option>
+        <option>Accesorios</option>
+      </select>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Cantidad en Stock <span class="required">*</span></label>
+        <input type="number" id="mCantidad" placeholder="0" min="0" />
+      </div>
+      <div class="form-group">
+        <label>Precio Unitario <span class="required">*</span></label>
+        <input type="number" id="mPrecio" placeholder="$ 0.00" min="0" step="0.01" />
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Descripción</label>
+      <textarea id="mDesc" placeholder="Describe las características del producto..."></textarea>
+      <p class="hint">Opcional: Agrega detalles adicionales sobre el producto</p>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-save" id="btnGuardar" onclick="saveProduct()">Guardar Producto</button>
+      <button class="btn-cancel" onclick="closeModal()">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: AGREGAR / EDITAR USUARIO -->
+<div class="modal-overlay" id="userModalOverlay">
+  <div class="modal">
+    <h2 id="userModalTitle">Agregar Nuevo Usuario</h2>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Nombre Completo <span class="required">*</span></label>
+        <input type="text" id="uNombre" placeholder="Ej: Ana Torres" />
+      </div>
+      <div class="form-group">
+        <label>Correo Electrónico <span class="required">*</span></label>
+        <input type="email" id="uEmail" placeholder="usuario@sportstock.com" />
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Rol <span class="required">*</span></label>
+        <select id="uRol">
+          <option value="">Selecciona un rol</option>
+          <option>Administrador</option>
+          <option>Gerente</option>
+          <option>Almacenista</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Estado <span class="required">*</span></label>
+        <select id="uEstado">
+          <option value="Activo">Activo</option>
+          <option value="Inactivo">Inactivo</option>
+        </select>
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-save" id="btnGuardarUsuario" onclick="saveUser()">Guardar Usuario</button>
+      <button class="btn-cancel" onclick="closeUserModal()">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: CONFIRMAR ELIMINACIÓN DE PRODUCTO -->
+<div class="modal-overlay" id="deleteModalOverlay">
+  <div class="modal" style="max-width:420px; text-align:center;">
+    <div style="font-size:48px; margin-bottom:16px;">🗑️</div>
+    <h2 style="margin-bottom:8px;">¿Eliminar producto?</h2>
+    <p id="deleteProductName" style="color:#6B7280; font-size:14px; margin-bottom:24px;"></p>
+    <div class="modal-actions">
+      <button class="btn-save" style="background:#EF4444;" onclick="confirmDelete()">Sí, eliminar</button>
+      <button class="btn-cancel" onclick="closeDeleteModal()">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: CONFIRMAR ELIMINACIÓN DE USUARIO -->
+<div class="modal-overlay" id="deleteUserModalOverlay">
+  <div class="modal" style="max-width:420px; text-align:center;">
+    <div style="font-size:48px; margin-bottom:16px;">👤</div>
+    <h2 style="margin-bottom:8px;">¿Eliminar usuario?</h2>
+    <p id="deleteUserName" style="color:#6B7280; font-size:14px; margin-bottom:24px;"></p>
+    <div class="modal-actions">
+      <button class="btn-save" style="background:#EF4444;" onclick="confirmDeleteUser()">Sí, eliminar</button>
+      <button class="btn-cancel" onclick="closeDeleteUserModal()">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+<script>
+
+  const products = [
+    { code:'FB001',  name:'Balón de Fútbol Profesional', cat:'Fútbol',     qty:45,  price:29.99  },
+    { code:'FB002',  name:'Guantes de Portero',           cat:'Fútbol',     qty:23,  price:34.50  },
+    { code:'BB001',  name:'Balón de Baloncesto Spalding', cat:'Baloncesto', qty:31,  price:42.00  },
+    { code:'TN001',  name:'Raqueta de Tenis Wilson',      cat:'Tenis',      qty:15,  price:89.99  },
+    { code:'RN001',  name:'Zapatillas Running Nike',      cat:'Running',    qty:58,  price:119.99 },
+    { code:'NT001',  name:'Gafas de Natación',            cat:'Natación',   qty:67,  price:18.50  },
+    { code:'GYM001', name:'Mancuernas 5kg (Par)',         cat:'Gimnasio',   qty:42,  price:24.99  },
+    { code:'FB003',  name:'Espinilleras Profesionales',   cat:'Fútbol',     qty:38,  price:15.99  },
+    { code:'CY001',  name:'Casco de Ciclismo',            cat:'Ciclismo',   qty:22,  price:54.99  },
+    { code:'ACC001', name:'Botella Deportiva 1L',         cat:'Accesorios', qty:120, price:9.99   },
+    { code:'RN002',  name:'Calcetines Running (Pack 3)',  cat:'Running',    qty:85,  price:12.50  },
+    { code:'TN002',  name:'Pelotas de Tenis (Pack 3)',    cat:'Tenis',      qty:94,  price:8.99   },
+  ];
+
+  const users = [
+    { name:'Carlos Méndez',  email:'carlos@sportstock.com', rol:'Administrador', estado:'Activo' },
+    { name:'María González', email:'maria@sportstock.com',  rol:'Gerente',       estado:'Activo' },
+    { name:'Juan Pérez',     email:'juan@sportstock.com',   rol:'Almacenista',   estado:'Activo' },
+  ];
+
+  let editProductIndex   = null;
+  let editUserIndex      = null;
+  let deleteProductIndex = null;
+  let deleteUserIndex    = null;
+
+  const catClass = {
+    'Fútbol':'futbol', 'Baloncesto':'baloncesto', 'Tenis':'tenis',
+    'Running':'running', 'Natación':'natacion', 'Gimnasio':'gimnasio',
+    'Ciclismo':'ciclismo', 'Accesorios':'accesorios'
+  };
+
+  function qtyClass(q) {
+    return q >= 50 ? 'green' : q >= 25 ? 'orange' : 'red';
+  }
+
+  function renderTable(data) {
+    const tbody = document.getElementById('tableBody');
+    tbody.innerHTML = data.map((p, i) => `
+      <tr>
+        <td class="code">${p.code}</td>
+        <td>${p.name}</td>
+        <td><span class="badge ${catClass[p.cat] || ''}">${p.cat}</span></td>
+        <td><span class="qty ${qtyClass(p.qty)}">${p.qty} unidades</span></td>
+        <td class="price">$${p.price.toFixed(2)}</td>
+        <td class="actions">
+          <button class="btn-icon" title="Editar" onclick="openEditModal(${i})">✏️</button>
+          <button class="btn-icon" title="Eliminar" onclick="openDeleteModal(${i})">🗑️</button>
+        </td>
+      </tr>`).join('');
+    document.getElementById('tableFooter').textContent =
+      `Mostrando ${data.length} de ${products.length} productos`;
+  }
+
+  function filterTable() {
+    const q = document.getElementById('searchInput').value.toLowerCase();
+    renderTable(products.filter(p =>
+      p.code.toLowerCase().includes(q) ||
+      p.name.toLowerCase().includes(q) ||
+      p.cat.toLowerCase().includes(q)
+    ));
+  }
+
+  function renderUsers() {
+    const list = document.getElementById('userList');
+    list.innerHTML = users.map((u, i) => `
+      <div class="user-card">
+        <div class="avatar">${u.name.charAt(0)}</div>
+        <div class="user-info">
+          <strong>${u.name}</strong>
+          <span>${u.email}</span>
+        </div>
+        <div class="tags">
+          <span class="tag ${u.rol === 'Administrador' ? 'admin' : ''}">${u.rol}</span>
+          <span class="tag ${u.estado === 'Activo' ? 'activo' : ''}">${u.estado}</span>
+        </div>
+        <div class="actions" style="margin-left:auto;">
+          <button class="btn-icon" title="Editar usuario" onclick="openEditUserModal(${i})">✏️</button>
+          <button class="btn-icon" title="Eliminar usuario" onclick="openDeleteUserModal(${i})">🗑️</button>
+        </div>
+      </div>`).join('');
+
+    document.getElementById('totalUsuarios').textContent = users.length;
+    document.getElementById('totalAdmins').textContent   = users.filter(u => u.rol === 'Administrador').length;
+    document.getElementById('totalActivos').textContent  = users.filter(u => u.estado === 'Activo').length;
+  }
+
+  function showPage(page) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    document.getElementById('page-' + page).classList.add('active');
+    document.getElementById('nav-' + page).classList.add('active');
+  }
+
+  function openModal() {
+    editProductIndex = null;
+    document.getElementById('modalTitle').textContent = 'Registrar Nuevo Artículo';
+    document.getElementById('btnGuardar').textContent = 'Guardar Producto';
+    ['mNombre','mCategoria','mCantidad','mPrecio','mDesc'].forEach(id => {
+      document.getElementById(id).value = '';
+    });
+    document.getElementById('modalOverlay').classList.add('open');
+  }
+
+  function openEditModal(index) {
+    editProductIndex = index;
+    const p = products[index];
+    document.getElementById('modalTitle').textContent   = 'Editar Artículo';
+    document.getElementById('btnGuardar').textContent   = 'Actualizar Producto';
+    document.getElementById('mNombre').value    = p.name;
+    document.getElementById('mCategoria').value = p.cat;
+    document.getElementById('mCantidad').value  = p.qty;
+    document.getElementById('mPrecio').value    = p.price;
+    document.getElementById('mDesc').value      = '';
+    document.getElementById('modalOverlay').classList.add('open');
+  }
+
+  function closeModal() {
+    document.getElementById('modalOverlay').classList.remove('open');
+    editProductIndex = null;
+  }
+
+  function saveProduct() {
+    const name  = document.getElementById('mNombre').value.trim();
+    const cat   = document.getElementById('mCategoria').value;
+    const qty   = parseInt(document.getElementById('mCantidad').value);
+    const price = parseFloat(document.getElementById('mPrecio').value);
+    if (!name || !cat || isNaN(qty) || isNaN(price)) {
+      alert('Por favor completa todos los campos obligatorios.');
+      return;
+    }
+    if (editProductIndex !== null) {
+      products[editProductIndex] = { ...products[editProductIndex], name, cat, qty, price };
+    } else {
+      const code = cat.toUpperCase().substring(0,3) + String(products.length + 1).padStart(3,'0');
+      products.push({ code, name, cat, qty, price });
+    }
+    renderTable(products);
+    closeModal();
+  }
+
+  function openDeleteModal(index) {
+    deleteProductIndex = index;
+    document.getElementById('deleteProductName').textContent =
+      `"${products[index].name}" será eliminado permanentemente.`;
+    document.getElementById('deleteModalOverlay').classList.add('open');
+  }
+
+  function closeDeleteModal() {
+    document.getElementById('deleteModalOverlay').classList.remove('open');
+    deleteProductIndex = null;
+  }
+
+  function confirmDelete() {
+    if (deleteProductIndex !== null) {
+      products.splice(deleteProductIndex, 1);
+      renderTable(products);
+      closeDeleteModal();
+    }
+  }
+
+  function openUserModal() {
+    editUserIndex = null;
+    document.getElementById('userModalTitle').textContent    = 'Agregar Nuevo Usuario';
+    document.getElementById('btnGuardarUsuario').textContent = 'Guardar Usuario';
+    ['uNombre','uEmail','uRol'].forEach(id => document.getElementById(id).value = '');
+    document.getElementById('uEstado').value = 'Activo';
+    document.getElementById('userModalOverlay').classList.add('open');
+  }
+
+  function openEditUserModal(index) {
+    editUserIndex = index;
+    const u = users[index];
+    document.getElementById('userModalTitle').textContent    = 'Editar Usuario';
+    document.getElementById('btnGuardarUsuario').textContent = 'Actualizar Usuario';
+    document.getElementById('uNombre').value  = u.name;
+    document.getElementById('uEmail').value   = u.email;
+    document.getElementById('uRol').value     = u.rol;
+    document.getElementById('uEstado').value  = u.estado;
+    document.getElementById('userModalOverlay').classList.add('open');
+  }
+
+  function closeUserModal() {
+    document.getElementById('userModalOverlay').classList.remove('open');
+    editUserIndex = null;
+  }
+
+  function saveUser() {
+    const name   = document.getElementById('uNombre').value.trim();
+    const email  = document.getElementById('uEmail').value.trim();
+    const rol    = document.getElementById('uRol').value;
+    const estado = document.getElementById('uEstado').value;
+    if (!name || !email || !rol) {
+      alert('Por favor completa todos los campos obligatorios.');
+      return;
+    }
+    if (editUserIndex !== null) {
+      users[editUserIndex] = { name, email, rol, estado };
+    } else {
+      users.push({ name, email, rol, estado });
+    }
+    renderUsers();
+    closeUserModal();
+  }
+
+  function openDeleteUserModal(index) {
+    deleteUserIndex = index;
+    document.getElementById('deleteUserName').textContent =
+      `"${users[index].name}" será eliminado permanentemente.`;
+    document.getElementById('deleteUserModalOverlay').classList.add('open');
+  }
+
+  function closeDeleteUserModal() {
+    document.getElementById('deleteUserModalOverlay').classList.remove('open');
+    deleteUserIndex = null;
+  }
+
+  function confirmDeleteUser() {
+    if (deleteUserIndex !== null) {
+      users.splice(deleteUserIndex, 1);
+      renderUsers();
+      closeDeleteUserModal();
+    }
+  }
+
+  document.getElementById('modalOverlay').addEventListener('click', function(e) {
+    if (e.target === this) closeModal();
+  });
+  document.getElementById('userModalOverlay').addEventListener('click', function(e) {
+    if (e.target === this) closeUserModal();
+  });
+  document.getElementById('deleteModalOverlay').addEventListener('click', function(e) {
+    if (e.target === this) closeDeleteModal();
+  });
+  document.getElementById('deleteUserModalOverlay').addEventListener('click', function(e) {
+    if (e.target === this) closeDeleteUserModal();
+  });
+
+  renderTable(products);
+  renderUsers();
+
+</script>
+</body>
+</html>

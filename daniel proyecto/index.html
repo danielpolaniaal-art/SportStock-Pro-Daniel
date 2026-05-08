@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SportStock Pro - Login</title>
+    <link rel="stylesheet" href="CSS/styles.css">
+</head>
+<body>
+    <div class="login-page">
+        <div class="login-card">
+
+            <div class="login-logo">
+                <img src="assets/logo.png" alt="Logo">
+            </div>
+
+            <h1>SportStock Pro</h1>
+            <p class="subtitle">Sistema de Gestión de Inventario</p>
+
+            <!-- Campo usuario -->
+            <div class="form-group">
+                <label>Usuario</label>
+                <input type="text" id="username" placeholder="ejemplo@sportstock.com">
+                <p id="errorUsuario" style="color:red; font-size:12px; margin-top:4px; display:none;">
+                    ⚠️ El usuario debe contener un @
+                </p>
+            </div>
+
+            <!-- Campo contraseña -->
+            <div class="form-group">
+                <label>Contraseña</label>
+                <input type="password" id="password" placeholder="Mínimo 1 carácter especial">
+                <p id="errorPassword" style="color:red; font-size:12px; margin-top:4px; display:none;">
+                    ⚠️ La contraseña requiere un carácter especial
+                </p>
+            </div>
+
+            <!-- Botones principales -->
+            <button class="btn-primary" onclick="login()">Ingresar</button>
+            
+            <!-- Texto profesional para invitar al registro -->
+            <p style="font-size: 14px; color: #6B7280; margin-top: 20px;">
+                ¿No tienes una cuenta? 
+                <a href="#" onclick="abrirRegistro(); return false;" style="color: #5B4FE8; font-weight: 600; text-decoration: none;">Regístrate aquí</a>
+            </p>
+
+            <a href="#" class="forgot-link" onclick="abrirRecuperar(); return false;" style="display: block; margin-top: 10px; text-decoration: none; font-size: 13px; color: #9CA3AF;">¿Olvidaste tu contraseña?</a>
+
+        </div>
+    </div>
+
+    <p class="login-footer">© 2026 SportStock Pro. Todos los derechos reservados.</p>
+
+    <!-- ============================================================
+         MODAL: REGISTRO (Actualizado con tono profesional)
+         ============================================================ -->
+    <div id="modalRegistro" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.4); z-index:300; align-items:center; justify-content:center; padding:20px;">
+        <div style="background:white; border-radius:20px; padding:35px 36px; width:100%; max-width:440px; box-shadow:0 8px 40px rgba(91,79,232,0.15);">
+            
+            <h2 style="font-size:22px; font-weight:700; margin-bottom:8px; text-align:center; color:#1A1A2E;">Comienza ahora</h2>
+            <p style="text-align:center; color:#6B7280; font-size:14px; margin-bottom:25px;">Crea tu cuenta para gestionar tu inventario.</p>
+            
+            <div class="form-group" style="margin-bottom: 15px;">
+                <label style="display:block; margin-bottom:5px; font-weight:600; font-size:14px;">Nombre Completo</label>
+                <input type="text" id="regNombre" placeholder="Tu nombre" style="width:100%; padding:12px; border:1px solid #E5E7EB; border-radius:10px;">
+            </div>
+
+            <div class="form-group" style="margin-bottom: 15px;">
+                <label style="display:block; margin-bottom:5px; font-weight:600; font-size:14px;">Correo Corporativo</label>
+                <input type="email" id="regCorreo" placeholder="usuario@sportstock.com" style="width:100%; padding:12px; border:1px solid #E5E7EB; border-radius:10px;">
+            </div>
+
+            <div class="form-group" style="margin-bottom: 25px;">
+                <label style="display:block; margin-bottom:5px; font-weight:600; font-size:14px;">Contraseña</label>
+                <input type="password" id="regPass" placeholder="Crea una clave segura" style="width:100%; padding:12px; border:1px solid #E5E7EB; border-radius:10px;">
+            </div>
+
+            <div style="display:flex; gap:12px;">
+                <button onclick="registrarUsuario()" style="flex:2; padding:13px; background:#5B4FE8; color:white; border:none; border-radius:12px; font-size:15px; font-weight:600; cursor:pointer;">Crear cuenta</button>
+                <button onclick="cerrarRegistro()" style="flex:1; padding:13px; background:white; color:#1A1A2E; border:1.5px solid #E5E7EB; border-radius:12px; font-size:15px; font-weight:600; cursor:pointer;">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================
+         MODAL: RECUPERAR (Se mantiene igual por funcionalidad)
+         ============================================================ -->
+    <div id="modalRecuperar" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.4); z-index:300; align-items:center; justify-content:center; padding:20px;">
+        <div style="background:white; border-radius:20px; padding:40px 36px; width:100%; max-width:440px; box-shadow:0 8px 40px rgba(91,79,232,0.15); text-align:center;">
+            <div id="vistaFormulario">
+                <div style="font-size:40px; margin-bottom:12px;">🔐</div>
+                <h2 style="font-size:20px; font-weight:700; margin-bottom:8px;">Recuperar acceso</h2>
+                <p style="color:#6B7280; font-size:14px; margin-bottom:24px;">Te enviaremos un enlace para restablecer tu contraseña.</p>
+
+                <div class="form-group" style="text-align:left;">
+                    <label>Correo Electrónico</label>
+                    <input type="text" id="correoRecuperar" placeholder="ejemplo@sportstock.com" />
+                    <p id="errorRecuperar" style="color:red; font-size:12px; margin-top:4px; display:none;">⚠️ Correo inválido</p>
+                </div>
+
+                <div style="display:flex; gap:12px; margin-top:8px;">
+                    <button onclick="enviarRecuperacion()" style="flex:1; padding:13px; background:#5B4FE8; color:white; border:none; border-radius:12px; font-size:15px; font-weight:600; cursor:pointer;">Enviar enlace</button>
+                    <button onclick="cerrarRecuperar()" style="flex:1; padding:13px; background:white; color:#1A1A2E; border:1.5px solid #E5E7EB; border-radius:12px; font-size:15px; font-weight:600; cursor:pointer;">Cerrar</button>
+                </div>
+            </div>
+
+            <div id="vistaConfirmacion" style="display:none;">
+                <div style="font-size:48px; margin-bottom:16px;">✅</div>
+                <h2 style="font-size:20px; font-weight:700; margin-bottom:8px;">Revisa tu bandeja</h2>
+                <p style="color:#6B7280; font-size:14px; margin-bottom:24px;">Hemos enviado las instrucciones a <strong id="correoMostrado"></strong>.</p>
+                <button onclick="cerrarRecuperar()" style="width:100%; padding:13px; background:#5B4FE8; color:white; border:none; border-radius:12px; font-size:15px; font-weight:600; cursor:pointer;">Entendido</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Lógica de Login
+        function login() {
+            const user = document.getElementById('username').value.trim();
+            const pass = document.getElementById('password').value.trim();
+            document.getElementById('errorUsuario').style.display  = 'none';
+            document.getElementById('errorPassword').style.display = 'none';
+
+            let hayError = false;
+            if (!user.includes('@')) {
+                document.getElementById('errorUsuario').style.display = 'block';
+                hayError = true;
+            }
+            const tieneEspecial = /[!@#$%^&*()\-_+=,\.?\/]/.test(pass);
+            if (!pass || !tieneEspecial) {
+                document.getElementById('errorPassword').style.display = 'block';
+                hayError = true;
+            }
+
+            if (!hayError) window.location.href = 'dashboard.html';
+        }
+
+        // Lógica Registro
+        function abrirRegistro() {
+            document.getElementById('regNombre').value = '';
+            document.getElementById('regCorreo').value = '';
+            document.getElementById('regPass').value = '';
+            document.getElementById('modalRegistro').style.display = 'flex';
+        }
+        function cerrarRegistro() { document.getElementById('modalRegistro').style.display = 'none'; }
+        
+        function registrarUsuario() {
+            const nombre = document.getElementById('regNombre').value.trim();
+            if (nombre && document.getElementById('regCorreo').value.includes('@')) {
+                alert("Cuenta creada para " + nombre);
+                cerrarRegistro();
+            } else {
+                alert("Verifique los datos ingresados.");
+            }
+        }
+
+        // Lógica Recuperar
+        function abrirRecuperar() {
+            document.getElementById('vistaFormulario').style.display = 'block';
+            document.getElementById('vistaConfirmacion').style.display = 'none';
+            document.getElementById('modalRecuperar').style.display = 'flex';
+        }
+        function cerrarRecuperar() { document.getElementById('modalRecuperar').style.display = 'none'; }
+        
+        function enviarRecuperacion() {
+            const correo = document.getElementById('correoRecuperar').value.trim();
+            if (correo.includes('@')) {
+                document.getElementById('correoMostrado').textContent = correo;
+                document.getElementById('vistaFormulario').style.display = 'none';
+                document.getElementById('vistaConfirmacion').style.display = 'block';
+            }
+        }
+
+        // Cierre general de modales
+        window.onclick = function(e) {
+            if (e.target == document.getElementById('modalRecuperar')) cerrarRecuperar();
+            if (e.target == document.getElementById('modalRegistro')) cerrarRegistro();
+        }
+    </script>
+</body>
+</html>
