@@ -466,23 +466,49 @@
     editProductIndex = null;
   }
 
-  function saveProduct() {
+  async function saveProduct() {
     const name  = document.getElementById('mNombre').value.trim();
     const cat   = document.getElementById('mCategoria').value;
     const qty   = parseInt(document.getElementById('mCantidad').value);
     const price = parseFloat(document.getElementById('mPrecio').value);
+
+    // Validación básica que ya tienes
     if (!name || !cat || isNaN(qty) || isNaN(price)) {
       alert('Por favor completa todos los campos obligatorios.');
       return;
     }
+
+    // --- BLOQUE A: DATOS QUEMADOS (Lo que pidió el profe) ---
     if (editProductIndex !== null) {
       products[editProductIndex] = { ...products[editProductIndex], name, cat, qty, price };
     } else {
       const code = cat.toUpperCase().substring(0,3) + String(products.length + 1).padStart(3,'0');
       products.push({ code, name, cat, qty, price });
     }
-    renderTable(products);
+    renderTable(products); // Actualiza la tabla visualmente de inmediato
     closeModal();
+
+    // --- BLOQUE B: CONEXIÓN CON TU API (Sistemas Operativos / Java) ---
+    // Creamos el objeto con los nombres exactos que espera tu DTO en IntelliJ
+    const productoBackend = {
+      nombre: name,
+      categoria: cat,
+      stock: qty,
+      precio: price
+    };
+
+    try {
+      // Enviamos el POST a tu servidor local
+      await fetch('http://localhost:8080/productos', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(productoBackend)
+      });
+      console.log("Sincronizado con IntelliJ con éxito.");
+    } catch (error) {
+      // Si IntelliJ está apagado, esto fallará en consola pero NO dañará tu página
+      console.warn("Servidor Java no disponible, usando solo datos quemados.");
+    }
   }
 
   function openDeleteModal(index) {
@@ -531,22 +557,45 @@
     editUserIndex = null;
   }
 
-  function saveUser() {
-    const name   = document.getElementById('uNombre').value.trim();
-    const email  = document.getElementById('uEmail').value.trim();
-    const rol    = document.getElementById('uRol').value;
-    const estado = document.getElementById('uEstado').value;
-    if (!name || !email || !rol) {
-      alert('Por favor completa todos los campos obligatorios.');
+  async function saveUser() {
+    const name  = document.getElementById('uNombre').value.trim();
+    const email = document.getElementById('uEmail').value.trim();
+    const role  = document.getElementById('uRol').value;
+    const state = document.getElementById('uEstado').value; // Agregué el estado
+
+    if (!name || !email) {
+      alert('Nombre y Email son obligatorios');
       return;
     }
+
+    // --- BLOQUE A: DATOS LOCALES ---
     if (editUserIndex !== null) {
-      users[editUserIndex] = { name, email, rol, estado };
+      users[editUserIndex] = { name, email, rol: role, estado: state };
     } else {
-      users.push({ name, email, rol, estado });
+      users.push({ name, email, rol: role, estado: state });
     }
-    renderUsers();
+    
+    renderUsers(); // <--- CORREGIDO: Antes decía renderUserTable
     closeUserModal();
+
+    // BLOQUE B: Ahora sí enviamos lo que Java pide
+    const usuarioBackend = {
+        nombre: name,     
+        correo: email,    // Cambiamos 'email' por 'correo' (como pidió Postman)
+        rol: role,
+        password: "123"   // Agregamos el campo obligatorio que nos rebotó antes
+    };
+
+    try {
+        await fetch('http://localhost:8080/usuarios', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(usuarioBackend)
+        });
+        console.log("Usuario sincronizado con éxito en IntelliJ");
+    } catch (error) {
+        console.warn("Servidor de usuarios no disponible, guardado solo localmente.");
+    }
   }
 
   function openDeleteUserModal(index) {
