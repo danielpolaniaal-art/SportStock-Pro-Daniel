@@ -54,116 +54,76 @@
         <p>Bienvenido al sistema de gestión de inventario</p>
       </div>
 
-      <!-- 4 tarjetas de estadísticas -->
       <div class="cards-row">
-
         <div class="stat-card">
           <div class="info">
             <p>Total Productos</p>
-            <h2>640</h2>
-            <div class="trend">↗ +12% vs mes anterior</div>
+            <h2 id="statTotalProductos">—</h2>
+            <div class="trend" id="statStockTotal">Cargando...</div>
           </div>
-          <div class="stat-icon blue">
-            <i class="fa-solid fa-box"></i>
-          </div>
+          <div class="stat-icon blue"><i class="fa-solid fa-box"></i></div>
         </div>
 
         <div class="stat-card">
           <div class="info">
-            <p>Categorías</p>
-            <h2>8</h2>
-            <div class="trend">↗ 8 categorías activas</div>
+            <p>Total Usuarios</p>
+            <h2 id="statTotalUsuarios">—</h2>
+            <div class="trend" id="statUsuariosActivos">Cargando...</div>
           </div>
-          <div class="stat-icon purple">
-            <i class="fa-solid fa-layer-group"></i>
-          </div>
+          <div class="stat-icon purple"><i class="fa-solid fa-user-group"></i></div>
         </div>
 
         <div class="stat-card">
           <div class="info">
-            <p>Stock Bajo</p>
-            <h2>12</h2>
-            <div class="trend warn">↗ Requiere atención</div>
+            <p>Stock Bajo (&lt;25)</p>
+            <h2 id="statStockBajo">—</h2>
+            <div class="trend warn" id="statStockBajoTxt">Cargando...</div>
           </div>
-          <div class="stat-icon orange">
-            <i class="fa-solid fa-triangle-exclamation"></i>
-          </div>
+          <div class="stat-icon orange"><i class="fa-solid fa-triangle-exclamation"></i></div>
         </div>
 
         <div class="stat-card">
           <div class="info">
-            <p>Valor Total</p>
-            <h2>$48.750,5</h2>
-            <div class="trend">↗ +8% este mes</div>
+            <p>Valor Total Inventario</p>
+            <h2 id="statValorTotal">—</h2>
+            <div class="trend">Stock × Precio</div>
           </div>
-          <div class="stat-icon green">
-            <i class="fa-solid fa-dollar-sign"></i>
-          </div>
+          <div class="stat-icon green"><i class="fa-solid fa-dollar-sign"></i></div>
         </div>
-
       </div>
 
-      <!-- Parte inferior -->
       <div class="bottom-grid">
-
         <div class="card">
           <div class="card-title">🛒 Productos con Mayor Stock</div>
-          <div class="product-row">
-            <div class="rank">1</div>
-            <div class="product-info"><strong>Botella Deportiva 1L</strong><span>Accesorios</span></div>
-            <div class="product-qty">120<small>unidades</small></div>
-          </div>
-          <div class="product-row">
-            <div class="rank">2</div>
-            <div class="product-info"><strong>Pelotas de Tenis (Pack 3)</strong><span>Tenis</span></div>
-            <div class="product-qty">94<small>unidades</small></div>
-          </div>
-          <div class="product-row">
-            <div class="rank">3</div>
-            <div class="product-info"><strong>Calcetines Running (Pack 3)</strong><span>Running</span></div>
-            <div class="product-qty">85<small>unidades</small></div>
-          </div>
-          <div class="product-row">
-            <div class="rank">4</div>
-            <div class="product-info"><strong>Gafas de Natación</strong><span>Natación</span></div>
-            <div class="product-qty">67<small>unidades</small></div>
-          </div>
+          <div id="topProductos"><p style="color:#9CA3AF;padding:16px;">Cargando...</p></div>
         </div>
 
         <div class="card">
-          <div class="card-title">↗ Resumen de Actividad</div>
+          <div class="card-title">↗ Estado del Servidor API</div>
           <div class="activity-item">
             <div>
-              <p class="label">Productos Registrados</p>
-              <p class="value">247</p>
+              <p class="label">Backend Java</p>
+              <p class="value" id="apiStatus" style="font-size:14px;">Verificando...</p>
             </div>
-            <div class="stat-icon blue">
-              <i class="fa-solid fa-box"></i>
-            </div>
+            <div class="stat-icon blue"><i class="fa-solid fa-server"></i></div>
           </div>
           <div class="activity-item">
             <div>
-              <p class="label">Actualizaciones Hoy</p>
-              <p class="value">18</p>
+              <p class="label">Endpoint Productos</p>
+              <p class="value" style="font-size:14px;">localhost:8080/productos</p>
             </div>
-            <div class="stat-icon purple">
-              <i class="fa-solid fa-layer-group"></i>
-            </div>
+            <div class="stat-icon purple"><i class="fa-solid fa-plug"></i></div>
           </div>
           <div class="activity-item">
             <div>
-              <p class="label">Alertas Pendientes</p>
-              <p class="value">12</p>
+              <p class="label">Endpoint Usuarios</p>
+              <p class="value" style="font-size:14px;">localhost:8080/usuarios</p>
             </div>
-            <div class="stat-icon orange">
-              <i class="fa-solid fa-triangle-exclamation"></i>
-            </div>
+            <div class="stat-icon green"><i class="fa-solid fa-plug"></i></div>
           </div>
         </div>
-
       </div>
     </div>
-    <!-- FIN PÁGINA INICIO -->
 
     <!-- ======================== PÁGINA: INVENTARIO ======================== -->
     <div class="page" id="page-inventario">
@@ -175,29 +135,33 @@
       <div class="toolbar">
         <div class="search-box">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-          <input type="text" id="searchInput" placeholder="Buscar por código, nombre o categoría..." oninput="filterTable()" />
+          <input type="text" id="searchInput" placeholder="Buscar por ID, nombre o categoría..." oninput="filterTable()" />
         </div>
         <button class="btn-add" onclick="openModal()">+ Registrar Artículo</button>
       </div>
+
+      <!-- Banner de estado de conexión -->
+      <div id="apiBanner" style="display:none; padding:10px 16px; border-radius:10px; margin-bottom:12px; font-size:13px;"></div>
 
       <div class="table-wrap">
         <table>
           <thead>
             <tr>
-              <th>Código</th>
+              <th>ID</th>
               <th>Nombre del Artículo</th>
               <th>Categoría</th>
-              <th>Cantidad</th>
+              <th>Stock</th>
               <th>Precio</th>
               <th>Acciones</th>
             </tr>
           </thead>
-          <tbody id="tableBody"></tbody>
+          <tbody id="tableBody">
+            <tr><td colspan="6" style="text-align:center;color:#9CA3AF;padding:32px;">Cargando productos...</td></tr>
+          </tbody>
         </table>
-        <div class="table-footer" id="tableFooter">Mostrando 12 de 12 productos</div>
+        <div class="table-footer" id="tableFooter"></div>
       </div>
     </div>
-    <!-- FIN PÁGINA INVENTARIO -->
 
     <!-- ======================== PÁGINA: USUARIOS ======================== -->
     <div class="page" id="page-usuarios">
@@ -208,15 +172,15 @@
 
       <div class="users-cards">
         <div class="user-stat">
-          <div class="info"><p>Total Usuarios</p><h2 id="totalUsuarios">3</h2></div>
+          <div class="info"><p>Total Usuarios</p><h2 id="totalUsuarios">—</h2></div>
           <div class="stat-icon blue"><i class="fa-solid fa-user-group"></i></div>
         </div>
         <div class="user-stat">
-          <div class="info"><p>Administradores</p><h2 id="totalAdmins">1</h2></div>
+          <div class="info"><p>Administradores</p><h2 id="totalAdmins">—</h2></div>
           <div class="stat-icon purple"><i class="fa-solid fa-shield"></i></div>
         </div>
         <div class="user-stat">
-          <div class="info"><p>Usuarios Activos</p><h2 id="totalActivos">3</h2></div>
+          <div class="info"><p>Usuarios Activos</p><h2 id="totalActivos">—</h2></div>
           <div class="stat-icon green"><i class="fa-solid fa-user-plus"></i></div>
         </div>
       </div>
@@ -226,9 +190,8 @@
         <button class="btn-add" onclick="openUserModal()">👤 Agregar Usuario</button>
       </div>
 
-      <div id="userList"></div>
+      <div id="userList"><p style="color:#9CA3AF;padding:16px;">Cargando usuarios...</p></div>
     </div>
-    <!-- FIN PÁGINA USUARIOS -->
 
   </main>
 </div>
@@ -245,14 +208,9 @@
       <label>Categoría <span class="required">*</span></label>
       <select id="mCategoria">
         <option value="">Selecciona una categoría</option>
-        <option>Fútbol</option>
-        <option>Baloncesto</option>
-        <option>Tenis</option>
-        <option>Running</option>
-        <option>Natación</option>
-        <option>Gimnasio</option>
-        <option>Ciclismo</option>
-        <option>Accesorios</option>
+        <option>Fútbol</option><option>Baloncesto</option><option>Tenis</option>
+        <option>Running</option><option>Natación</option><option>Gimnasio</option>
+        <option>Ciclismo</option><option>Accesorios</option>
       </select>
     </div>
     <div class="form-row">
@@ -296,9 +254,7 @@
         <label>Rol <span class="required">*</span></label>
         <select id="uRol">
           <option value="">Selecciona un rol</option>
-          <option>Administrador</option>
-          <option>Gerente</option>
-          <option>Almacenista</option>
+          <option>Administrador</option><option>Gerente</option><option>Almacenista</option>
         </select>
       </div>
       <div class="form-group">
@@ -316,12 +272,12 @@
   </div>
 </div>
 
-<!-- MODAL: CONFIRMAR ELIMINACIÓN DE PRODUCTO -->
+<!-- MODAL: CONFIRMAR ELIMINACIÓN PRODUCTO -->
 <div class="modal-overlay" id="deleteModalOverlay">
-  <div class="modal" style="max-width:420px; text-align:center;">
-    <div style="font-size:48px; margin-bottom:16px;">🗑️</div>
+  <div class="modal" style="max-width:420px;text-align:center;">
+    <div style="font-size:48px;margin-bottom:16px;">🗑️</div>
     <h2 style="margin-bottom:8px;">¿Eliminar producto?</h2>
-    <p id="deleteProductName" style="color:#6B7280; font-size:14px; margin-bottom:24px;"></p>
+    <p id="deleteProductName" style="color:#6B7280;font-size:14px;margin-bottom:24px;"></p>
     <div class="modal-actions">
       <button class="btn-save" style="background:#EF4444;" onclick="confirmDelete()">Sí, eliminar</button>
       <button class="btn-cancel" onclick="closeDeleteModal()">Cancelar</button>
@@ -329,12 +285,12 @@
   </div>
 </div>
 
-<!-- MODAL: CONFIRMAR ELIMINACIÓN DE USUARIO -->
+<!-- MODAL: CONFIRMAR ELIMINACIÓN USUARIO -->
 <div class="modal-overlay" id="deleteUserModalOverlay">
-  <div class="modal" style="max-width:420px; text-align:center;">
-    <div style="font-size:48px; margin-bottom:16px;">👤</div>
+  <div class="modal" style="max-width:420px;text-align:center;">
+    <div style="font-size:48px;margin-bottom:16px;">👤</div>
     <h2 style="margin-bottom:8px;">¿Eliminar usuario?</h2>
-    <p id="deleteUserName" style="color:#6B7280; font-size:14px; margin-bottom:24px;"></p>
+    <p id="deleteUserName" style="color:#6B7280;font-size:14px;margin-bottom:24px;"></p>
     <div class="modal-actions">
       <button class="btn-save" style="background:#EF4444;" onclick="confirmDeleteUser()">Sí, eliminar</button>
       <button class="btn-cancel" onclick="closeDeleteUserModal()">Cancelar</button>
@@ -343,297 +299,495 @@
 </div>
 
 <script>
+// ============================================================
+//  CONFIGURACIÓN
+// ============================================================
+const API = 'http://localhost:8080';
 
-  const products = [
-    { code:'FB001',  name:'Balón de Fútbol Profesional', cat:'Fútbol',     qty:45,  price:29.99  },
-    { code:'FB002',  name:'Guantes de Portero',           cat:'Fútbol',     qty:23,  price:34.50  },
-    { code:'BB001',  name:'Balón de Baloncesto Spalding', cat:'Baloncesto', qty:31,  price:42.00  },
-    { code:'TN001',  name:'Raqueta de Tenis Wilson',      cat:'Tenis',      qty:15,  price:89.99  },
-    { code:'RN001',  name:'Zapatillas Running Nike',      cat:'Running',    qty:58,  price:119.99 },
-    { code:'NT001',  name:'Gafas de Natación',            cat:'Natación',   qty:67,  price:18.50  },
-    { code:'GYM001', name:'Mancuernas 5kg (Par)',         cat:'Gimnasio',   qty:42,  price:24.99  },
-    { code:'FB003',  name:'Espinilleras Profesionales',   cat:'Fútbol',     qty:38,  price:15.99  },
-    { code:'CY001',  name:'Casco de Ciclismo',            cat:'Ciclismo',   qty:22,  price:54.99  },
-    { code:'ACC001', name:'Botella Deportiva 1L',         cat:'Accesorios', qty:120, price:9.99   },
-    { code:'RN002',  name:'Calcetines Running (Pack 3)',  cat:'Running',    qty:85,  price:12.50  },
-    { code:'TN002',  name:'Pelotas de Tenis (Pack 3)',    cat:'Tenis',      qty:94,  price:8.99   },
-  ];
+// ============================================================
+//  DATOS QUEMADOS (siempre visibles aunque el backend esté apagado)
+// ============================================================
+const PRODUCTOS_BASE = [
+  { id:'L001', nombre:'Balón de Fútbol Profesional',  categoria:'Fútbol',     stock:45,  precio:29.99,  descripcion:'' },
+  { id:'L002', nombre:'Guantes de Portero',           categoria:'Fútbol',     stock:23,  precio:34.50,  descripcion:'' },
+  { id:'L003', nombre:'Balón de Baloncesto Spalding', categoria:'Baloncesto', stock:31,  precio:42.00,  descripcion:'' },
+  { id:'L004', nombre:'Raqueta de Tenis Wilson',      categoria:'Tenis',      stock:15,  precio:89.99,  descripcion:'' },
+  { id:'L005', nombre:'Zapatillas Running Nike',      categoria:'Running',    stock:58,  precio:119.99, descripcion:'' },
+  { id:'L006', nombre:'Gafas de Natación',            categoria:'Natación',   stock:67,  precio:18.50,  descripcion:'' },
+  { id:'L007', nombre:'Mancuernas 5kg (Par)',         categoria:'Gimnasio',   stock:42,  precio:24.99,  descripcion:'' },
+  { id:'L008', nombre:'Espinilleras Profesionales',   categoria:'Fútbol',     stock:38,  precio:15.99,  descripcion:'' },
+  { id:'L009', nombre:'Casco de Ciclismo',            categoria:'Ciclismo',   stock:22,  precio:54.99,  descripcion:'' },
+  { id:'L010', nombre:'Botella Deportiva 1L',         categoria:'Accesorios', stock:120, precio:9.99,   descripcion:'' },
+  { id:'L011', nombre:'Calcetines Running (Pack 3)',  categoria:'Running',    stock:85,  precio:12.50,  descripcion:'' },
+  { id:'L012', nombre:'Pelotas de Tenis (Pack 3)',    categoria:'Tenis',      stock:94,  precio:8.99,   descripcion:'' },
+];
 
-  const users = [
-    { name:'Carlos Méndez',  email:'carlos@sportstock.com', rol:'Administrador', estado:'Activo' },
-    { name:'María González', email:'maria@sportstock.com',  rol:'Gerente',       estado:'Activo' },
-    { name:'Juan Pérez',     email:'juan@sportstock.com',   rol:'Almacenista',   estado:'Activo' },
-  ];
+const USUARIOS_BASE = [
+  { id:'U001', nombre:'Carlos Méndez',  correo:'carlos@sportstock.com', rol:'Administrador', estado:'Activo' },
+  { id:'U002', nombre:'María González', correo:'maria@sportstock.com',  rol:'Gerente',       estado:'Activo' },
+  { id:'U003', nombre:'Juan Pérez',     correo:'juan@sportstock.com',   rol:'Almacenista',   estado:'Activo' },
+];
 
-  let editProductIndex   = null;
-  let editUserIndex      = null;
-  let deleteProductIndex = null;
-  let deleteUserIndex    = null;
+// ============================================================
+//  ESTADO GLOBAL
+// ============================================================
+let products = [];   // datos quemados + los del backend
+let users    = [];
+let apiOnline = false;
 
-  const catClass = {
-    'Fútbol':'futbol', 'Baloncesto':'baloncesto', 'Tenis':'tenis',
-    'Running':'running', 'Natación':'natacion', 'Gimnasio':'gimnasio',
-    'Ciclismo':'ciclismo', 'Accesorios':'accesorios'
-  };
+let editProductId   = null;
+let editUserId      = null;
+let deleteProductId = null;
+let deleteUserId    = null;
 
-  function qtyClass(q) {
-    return q >= 50 ? 'green' : q >= 25 ? 'orange' : 'red';
-  }
+// ============================================================
+//  HELPERS
+// ============================================================
+async function apiFetch(path, options = {}) {
+  const res = await fetch(API + path, {
+    headers: { 'Content-Type': 'application/json' },
+    ...options
+  });
+  if (res.status === 204) return null;
+  const text = await res.text();
+  if (!res.ok) throw new Error(text || `Error ${res.status}`);
+  return text ? JSON.parse(text) : null;
+}
 
-  function renderTable(data) {
-    const tbody = document.getElementById('tableBody');
-    tbody.innerHTML = data.map((p, i) => `
-      <tr>
-        <td class="code">${p.code}</td>
-        <td>${p.name}</td>
-        <td><span class="badge ${catClass[p.cat] || ''}">${p.cat}</span></td>
-        <td><span class="qty ${qtyClass(p.qty)}">${p.qty} unidades</span></td>
-        <td class="price">$${p.price.toFixed(2)}</td>
-        <td class="actions">
-          <button class="btn-icon" title="Editar" onclick="openEditModal(${i})">✏️</button>
-          <button class="btn-icon" title="Eliminar" onclick="openDeleteModal(${i})">🗑️</button>
-        </td>
-      </tr>`).join('');
-    document.getElementById('tableFooter').textContent =
-      `Mostrando ${data.length} de ${products.length} productos`;
-  }
+// ============================================================
+//  INICIALIZACIÓN
+// ============================================================
+document.addEventListener('DOMContentLoaded', async () => {
+  await Promise.all([loadProductos(), loadUsuarios()]);
+  updateDashboard();
+});
 
-  function filterTable() {
-    const q = document.getElementById('searchInput').value.toLowerCase();
-    renderTable(products.filter(p =>
-      p.code.toLowerCase().includes(q) ||
-      p.name.toLowerCase().includes(q) ||
-      p.cat.toLowerCase().includes(q)
-    ));
-  }
+// ============================================================
+//  PRODUCTOS — CARGA
+//  Siempre arranca con los datos quemados.
+//  Si el backend responde, se agregan sus registros al final.
+// ============================================================
+async function loadProductos() {
+  // 1. Cargar datos quemados inmediatamente
+  products = [...PRODUCTOS_BASE];
 
-  function renderUsers() {
-    const list = document.getElementById('userList');
-    list.innerHTML = users.map((u, i) => `
-      <div class="user-card">
-        <div class="avatar">${u.name.charAt(0)}</div>
-        <div class="user-info">
-          <strong>${u.name}</strong>
-          <span>${u.email}</span>
-        </div>
-        <div class="tags">
-          <span class="tag ${u.rol === 'Administrador' ? 'admin' : ''}">${u.rol}</span>
-          <span class="tag ${u.estado === 'Activo' ? 'activo' : ''}">${u.estado}</span>
-        </div>
-        <div class="actions" style="margin-left:auto;">
-          <button class="btn-icon" title="Editar usuario" onclick="openEditUserModal(${i})">✏️</button>
-          <button class="btn-icon" title="Eliminar usuario" onclick="openDeleteUserModal(${i})">🗑️</button>
-        </div>
-      </div>`).join('');
-
-    document.getElementById('totalUsuarios').textContent = users.length;
-    document.getElementById('totalAdmins').textContent   = users.filter(u => u.rol === 'Administrador').length;
-    document.getElementById('totalActivos').textContent  = users.filter(u => u.estado === 'Activo').length;
-  }
-
-  function showPage(page) {
-    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-    document.getElementById('page-' + page).classList.add('active');
-    document.getElementById('nav-' + page).classList.add('active');
-  }
-
-  function openModal() {
-    editProductIndex = null;
-    document.getElementById('modalTitle').textContent = 'Registrar Nuevo Artículo';
-    document.getElementById('btnGuardar').textContent = 'Guardar Producto';
-    ['mNombre','mCategoria','mCantidad','mPrecio','mDesc'].forEach(id => {
-      document.getElementById(id).value = '';
+  try {
+    const apiData = await apiFetch('/productos');
+    apiOnline = true;
+    // Agregar al final los productos creados desde el backend
+    // (evitar duplicar los quemados comparando por nombre+categoria)
+    apiData.forEach(ap => {
+      const yaExiste = products.some(
+        p => p.nombre === ap.nombre && p.categoria === ap.categoria
+      );
+      if (!yaExiste) products.push(ap);
     });
-    document.getElementById('modalOverlay').classList.add('open');
+    showBanner(true, products.length, PRODUCTOS_BASE.length);
+  } catch {
+    apiOnline = false;
+    showBanner(false, products.length, PRODUCTOS_BASE.length);
   }
-
-  function openEditModal(index) {
-    editProductIndex = index;
-    const p = products[index];
-    document.getElementById('modalTitle').textContent   = 'Editar Artículo';
-    document.getElementById('btnGuardar').textContent   = 'Actualizar Producto';
-    document.getElementById('mNombre').value    = p.name;
-    document.getElementById('mCategoria').value = p.cat;
-    document.getElementById('mCantidad').value  = p.qty;
-    document.getElementById('mPrecio').value    = p.price;
-    document.getElementById('mDesc').value      = '';
-    document.getElementById('modalOverlay').classList.add('open');
-  }
-
-  function closeModal() {
-    document.getElementById('modalOverlay').classList.remove('open');
-    editProductIndex = null;
-  }
-
-  async function saveProduct() {
-    const name  = document.getElementById('mNombre').value.trim();
-    const cat   = document.getElementById('mCategoria').value;
-    const qty   = parseInt(document.getElementById('mCantidad').value);
-    const price = parseFloat(document.getElementById('mPrecio').value);
-
-    // Validación básica que ya tienes
-    if (!name || !cat || isNaN(qty) || isNaN(price)) {
-      alert('Por favor completa todos los campos obligatorios.');
-      return;
-    }
-
-    // --- BLOQUE A: DATOS QUEMADOS (Lo que pidió el profe) ---
-    if (editProductIndex !== null) {
-      products[editProductIndex] = { ...products[editProductIndex], name, cat, qty, price };
-    } else {
-      const code = cat.toUpperCase().substring(0,3) + String(products.length + 1).padStart(3,'0');
-      products.push({ code, name, cat, qty, price });
-    }
-    renderTable(products); // Actualiza la tabla visualmente de inmediato
-    closeModal();
-
-    // --- BLOQUE B: CONEXIÓN CON TU API (Sistemas Operativos / Java) ---
-    // Creamos el objeto con los nombres exactos que espera tu DTO en IntelliJ
-    const productoBackend = {
-      nombre: name,
-      categoria: cat,
-      stock: qty,
-      precio: price
-    };
-
-    try {
-      // Enviamos el POST a tu servidor local
-      await fetch('http://localhost:8080/productos', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(productoBackend)
-      });
-      console.log("Sincronizado con IntelliJ con éxito.");
-    } catch (error) {
-      // Si IntelliJ está apagado, esto fallará en consola pero NO dañará tu página
-      console.warn("Servidor Java no disponible, usando solo datos quemados.");
-    }
-  }
-
-  function openDeleteModal(index) {
-    deleteProductIndex = index;
-    document.getElementById('deleteProductName').textContent =
-      `"${products[index].name}" será eliminado permanentemente.`;
-    document.getElementById('deleteModalOverlay').classList.add('open');
-  }
-
-  function closeDeleteModal() {
-    document.getElementById('deleteModalOverlay').classList.remove('open');
-    deleteProductIndex = null;
-  }
-
-  function confirmDelete() {
-    if (deleteProductIndex !== null) {
-      products.splice(deleteProductIndex, 1);
-      renderTable(products);
-      closeDeleteModal();
-    }
-  }
-
-  function openUserModal() {
-    editUserIndex = null;
-    document.getElementById('userModalTitle').textContent    = 'Agregar Nuevo Usuario';
-    document.getElementById('btnGuardarUsuario').textContent = 'Guardar Usuario';
-    ['uNombre','uEmail','uRol'].forEach(id => document.getElementById(id).value = '');
-    document.getElementById('uEstado').value = 'Activo';
-    document.getElementById('userModalOverlay').classList.add('open');
-  }
-
-  function openEditUserModal(index) {
-    editUserIndex = index;
-    const u = users[index];
-    document.getElementById('userModalTitle').textContent    = 'Editar Usuario';
-    document.getElementById('btnGuardarUsuario').textContent = 'Actualizar Usuario';
-    document.getElementById('uNombre').value  = u.name;
-    document.getElementById('uEmail').value   = u.email;
-    document.getElementById('uRol').value     = u.rol;
-    document.getElementById('uEstado').value  = u.estado;
-    document.getElementById('userModalOverlay').classList.add('open');
-  }
-
-  function closeUserModal() {
-    document.getElementById('userModalOverlay').classList.remove('open');
-    editUserIndex = null;
-  }
-
-  async function saveUser() {
-    const name  = document.getElementById('uNombre').value.trim();
-    const email = document.getElementById('uEmail').value.trim();
-    const role  = document.getElementById('uRol').value;
-    const state = document.getElementById('uEstado').value; // Agregué el estado
-
-    if (!name || !email) {
-      alert('Nombre y Email son obligatorios');
-      return;
-    }
-
-    // --- BLOQUE A: DATOS LOCALES ---
-    if (editUserIndex !== null) {
-      users[editUserIndex] = { name, email, rol: role, estado: state };
-    } else {
-      users.push({ name, email, rol: role, estado: state });
-    }
-    
-    renderUsers(); // <--- CORREGIDO: Antes decía renderUserTable
-    closeUserModal();
-
-    // BLOQUE B: Ahora sí enviamos lo que Java pide
-    const usuarioBackend = {
-        nombre: name,     
-        correo: email,    // Cambiamos 'email' por 'correo' (como pidió Postman)
-        rol: role,
-        password: "123"   // Agregamos el campo obligatorio que nos rebotó antes
-    };
-
-    try {
-        await fetch('http://localhost:8080/usuarios', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(usuarioBackend)
-        });
-        console.log("Usuario sincronizado con éxito en IntelliJ");
-    } catch (error) {
-        console.warn("Servidor de usuarios no disponible, guardado solo localmente.");
-    }
-  }
-
-  function openDeleteUserModal(index) {
-    deleteUserIndex = index;
-    document.getElementById('deleteUserName').textContent =
-      `"${users[index].name}" será eliminado permanentemente.`;
-    document.getElementById('deleteUserModalOverlay').classList.add('open');
-  }
-
-  function closeDeleteUserModal() {
-    document.getElementById('deleteUserModalOverlay').classList.remove('open');
-    deleteUserIndex = null;
-  }
-
-  function confirmDeleteUser() {
-    if (deleteUserIndex !== null) {
-      users.splice(deleteUserIndex, 1);
-      renderUsers();
-      closeDeleteUserModal();
-    }
-  }
-
-  document.getElementById('modalOverlay').addEventListener('click', function(e) {
-    if (e.target === this) closeModal();
-  });
-  document.getElementById('userModalOverlay').addEventListener('click', function(e) {
-    if (e.target === this) closeUserModal();
-  });
-  document.getElementById('deleteModalOverlay').addEventListener('click', function(e) {
-    if (e.target === this) closeDeleteModal();
-  });
-  document.getElementById('deleteUserModalOverlay').addEventListener('click', function(e) {
-    if (e.target === this) closeDeleteUserModal();
-  });
 
   renderTable(products);
-  renderUsers();
+}
 
+function showBanner(online, total, base) {
+  const b = document.getElementById('apiBanner');
+  b.style.display = 'block';
+  if (online) {
+    b.style.background = '#D1FAE5';
+    b.style.color = '#065F46';
+    b.textContent = `✅ Conectado al servidor Java. Mostrando ${base} productos base + ${total - base} del backend.`;
+  } else {
+    b.style.background = '#FEF3C7';
+    b.style.color = '#92400E';
+    b.textContent = `⚠️ Backend no disponible. Mostrando ${base} productos base en modo local.`;
+  }
+  const st = document.getElementById('apiStatus');
+  if (st) st.textContent = online ? '🟢 En línea' : '🔴 Sin conexión';
+}
+
+// ============================================================
+//  RENDER TABLA PRODUCTOS
+// ============================================================
+const catClass = {
+  'Fútbol':'futbol','Baloncesto':'baloncesto','Tenis':'tenis',
+  'Running':'running','Natación':'natacion','Gimnasio':'gimnasio',
+  'Ciclismo':'ciclismo','Accesorios':'accesorios'
+};
+function qtyClass(q) { return q >= 50 ? 'green' : q >= 25 ? 'orange' : 'red'; }
+
+function renderTable(data) {
+  const tbody = document.getElementById('tableBody');
+  if (!data || data.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:#9CA3AF;padding:32px;">No hay productos registrados.</td></tr>';
+    document.getElementById('tableFooter').textContent = 'Sin productos';
+    return;
+  }
+  tbody.innerHTML = data.map(p => `
+    <tr>
+      <td class="code">${p.id}</td>
+      <td>${p.nombre}</td>
+      <td><span class="badge ${catClass[p.categoria] || ''}">${p.categoria || '—'}</span></td>
+      <td><span class="qty ${qtyClass(p.stock)}">${p.stock} unidades</span></td>
+      <td class="price">$${Number(p.precio).toFixed(2)}</td>
+      <td class="actions">
+        <button class="btn-icon" title="Editar" onclick="openEditModal('${p.id}')">✏️</button>
+        <button class="btn-icon" title="Eliminar" onclick="openDeleteModal('${p.id}')">🗑️</button>
+      </td>
+    </tr>`).join('');
+  document.getElementById('tableFooter').textContent =
+    `Mostrando ${data.length} de ${products.length} productos`;
+}
+
+function filterTable() {
+  const q = document.getElementById('searchInput').value.toLowerCase();
+  renderTable(products.filter(p =>
+    String(p.id).toLowerCase().includes(q) ||
+    (p.nombre || '').toLowerCase().includes(q) ||
+    (p.categoria || '').toLowerCase().includes(q)
+  ));
+}
+
+// ============================================================
+//  MODAL PRODUCTO
+// ============================================================
+function openModal() {
+  editProductId = null;
+  document.getElementById('modalTitle').textContent = 'Registrar Nuevo Artículo';
+  document.getElementById('btnGuardar').textContent = 'Guardar Producto';
+  ['mNombre','mCategoria','mCantidad','mPrecio','mDesc'].forEach(id =>
+    document.getElementById(id).value = '');
+  document.getElementById('modalOverlay').classList.add('open');
+}
+
+function openEditModal(id) {
+  const p = products.find(x => String(x.id) === String(id));
+  if (!p) return;
+  editProductId = id;
+  document.getElementById('modalTitle').textContent = 'Editar Artículo';
+  document.getElementById('btnGuardar').textContent = 'Actualizar Producto';
+  document.getElementById('mNombre').value    = p.nombre;
+  document.getElementById('mCategoria').value = p.categoria || '';
+  document.getElementById('mCantidad').value  = p.stock;
+  document.getElementById('mPrecio').value    = p.precio;
+  document.getElementById('mDesc').value      = p.descripcion || '';
+  document.getElementById('modalOverlay').classList.add('open');
+}
+
+function closeModal() {
+  document.getElementById('modalOverlay').classList.remove('open');
+  editProductId = null;
+}
+
+// ============================================================
+//  GUARDAR PRODUCTO
+// ============================================================
+async function saveProduct() {
+  const nombre      = document.getElementById('mNombre').value.trim();
+  const categoria   = document.getElementById('mCategoria').value;
+  const stock       = parseInt(document.getElementById('mCantidad').value);
+  const precio      = parseFloat(document.getElementById('mPrecio').value);
+  const descripcion = document.getElementById('mDesc').value.trim();
+
+  if (!nombre || !categoria || isNaN(stock) || isNaN(precio)) {
+    alert('Por favor completa todos los campos obligatorios.');
+    return;
+  }
+
+  const body = { nombre, categoria, stock, precio, descripcion };
+
+  if (editProductId !== null) {
+    // ---- EDITAR ----
+    const esLocal = String(editProductId).startsWith('L');
+    if (esLocal) {
+      // Producto quemado: editar solo en memoria
+      products = products.map(p =>
+        String(p.id) === String(editProductId)
+          ? { ...p, nombre, categoria, stock, precio, descripcion }
+          : p
+      );
+    } else {
+      // Producto del backend: PUT a la API
+      try {
+        const updated = await apiFetch(`/productos/${editProductId}`, {
+          method: 'PUT', body: JSON.stringify(body)
+        });
+        products = products.map(p =>
+          String(p.id) === String(editProductId) ? updated : p
+        );
+      } catch (err) {
+        // Si falla la API, editar igualmente en memoria
+        products = products.map(p =>
+          String(p.id) === String(editProductId)
+            ? { ...p, nombre, categoria, stock, precio, descripcion }
+            : p
+        );
+      }
+    }
+  } else {
+    // ---- CREAR ----
+    if (apiOnline) {
+      try {
+        const created = await apiFetch('/productos', {
+          method: 'POST', body: JSON.stringify(body)
+        });
+        products.push(created);
+      } catch {
+        // Si falla, agregar localmente con ID temporal
+        const tmpId = 'L' + String(Date.now()).slice(-4);
+        products.push({ id: tmpId, nombre, categoria, stock, precio, descripcion });
+      }
+    } else {
+      // Sin backend: agregar con ID local
+      const tmpId = 'L' + String(Date.now()).slice(-4);
+      products.push({ id: tmpId, nombre, categoria, stock, precio, descripcion });
+    }
+  }
+
+  renderTable(products);
+  updateDashboard();
+  closeModal();
+}
+
+// ============================================================
+//  ELIMINAR PRODUCTO
+// ============================================================
+function openDeleteModal(id) {
+  deleteProductId = id;
+  const p = products.find(x => String(x.id) === String(id));
+  document.getElementById('deleteProductName').textContent =
+    `"${p ? p.nombre : ''}" será eliminado permanentemente.`;
+  document.getElementById('deleteModalOverlay').classList.add('open');
+}
+function closeDeleteModal() {
+  document.getElementById('deleteModalOverlay').classList.remove('open');
+  deleteProductId = null;
+}
+async function confirmDelete() {
+  if (deleteProductId === null) return;
+  const esLocal = String(deleteProductId).startsWith('L');
+  if (!esLocal && apiOnline) {
+    try {
+      await apiFetch(`/productos/${deleteProductId}`, { method: 'DELETE' });
+    } catch { /* si falla, se elimina igual de la vista */ }
+  }
+  products = products.filter(p => String(p.id) !== String(deleteProductId));
+  renderTable(products);
+  updateDashboard();
+  closeDeleteModal();
+}
+
+// ============================================================
+//  USUARIOS — CARGA
+// ============================================================
+async function loadUsuarios() {
+  users = [...USUARIOS_BASE];
+
+  try {
+    const apiData = await apiFetch('/usuarios');
+    apiData.forEach(au => {
+      const yaExiste = users.some(
+        u => u.correo === au.correo
+      );
+      if (!yaExiste) users.push(au);
+    });
+  } catch { /* sin backend, solo datos quemados */ }
+
+  renderUsers();
+}
+
+// ============================================================
+//  RENDER USUARIOS
+// ============================================================
+function renderUsers() {
+  const list = document.getElementById('userList');
+  if (!users || users.length === 0) {
+    list.innerHTML = '<p style="color:#9CA3AF;padding:16px;">No hay usuarios registrados.</p>';
+  } else {
+    list.innerHTML = users.map(u => `
+      <div class="user-card">
+        <div class="avatar">${u.nombre.charAt(0)}</div>
+        <div class="user-info">
+          <strong>${u.nombre}</strong>
+          <span>${u.correo}</span>
+        </div>
+        <div class="tags">
+          <span class="tag ${u.rol === 'Administrador' ? 'admin' : ''}">${u.rol || '—'}</span>
+          <span class="tag ${u.estado === 'Activo' ? 'activo' : ''}">${u.estado || '—'}</span>
+        </div>
+        <div class="actions" style="margin-left:auto;">
+          <button class="btn-icon" title="Editar" onclick="openEditUserModal('${u.id}')">✏️</button>
+          <button class="btn-icon" title="Eliminar" onclick="openDeleteUserModal('${u.id}')">🗑️</button>
+        </div>
+      </div>`).join('');
+  }
+  document.getElementById('totalUsuarios').textContent = users.length;
+  document.getElementById('totalAdmins').textContent   = users.filter(u => u.rol === 'Administrador').length;
+  document.getElementById('totalActivos').textContent  = users.filter(u => u.estado === 'Activo').length;
+}
+
+// ============================================================
+//  MODAL USUARIO
+// ============================================================
+function openUserModal() {
+  editUserId = null;
+  document.getElementById('userModalTitle').textContent    = 'Agregar Nuevo Usuario';
+  document.getElementById('btnGuardarUsuario').textContent = 'Guardar Usuario';
+  ['uNombre','uEmail','uRol'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('uEstado').value = 'Activo';
+  document.getElementById('userModalOverlay').classList.add('open');
+}
+
+function openEditUserModal(id) {
+  const u = users.find(x => String(x.id) === String(id));
+  if (!u) return;
+  editUserId = id;
+  document.getElementById('userModalTitle').textContent    = 'Editar Usuario';
+  document.getElementById('btnGuardarUsuario').textContent = 'Actualizar Usuario';
+  document.getElementById('uNombre').value  = u.nombre;
+  document.getElementById('uEmail').value   = u.correo;
+  document.getElementById('uRol').value     = u.rol || '';
+  document.getElementById('uEstado').value  = u.estado || 'Activo';
+  document.getElementById('userModalOverlay').classList.add('open');
+}
+
+function closeUserModal() {
+  document.getElementById('userModalOverlay').classList.remove('open');
+  editUserId = null;
+}
+
+// ============================================================
+//  GUARDAR USUARIO
+// ============================================================
+async function saveUser() {
+  const nombre = document.getElementById('uNombre').value.trim();
+  const correo = document.getElementById('uEmail').value.trim();
+  const rol    = document.getElementById('uRol').value;
+  const estado = document.getElementById('uEstado').value;
+
+  if (!nombre || !correo) {
+    alert('Nombre y correo son obligatorios.');
+    return;
+  }
+
+  const body = { nombre, correo, rol, estado };
+
+  if (editUserId !== null) {
+    const esLocal = String(editUserId).startsWith('U');
+    if (esLocal) {
+      users = users.map(u =>
+        String(u.id) === String(editUserId)
+          ? { ...u, nombre, correo, rol, estado }
+          : u
+      );
+    } else {
+      try {
+        const updated = await apiFetch(`/usuarios/${editUserId}`, {
+          method: 'PUT', body: JSON.stringify(body)
+        });
+        users = users.map(u =>
+          String(u.id) === String(editUserId) ? updated : u
+        );
+      } catch {
+        users = users.map(u =>
+          String(u.id) === String(editUserId)
+            ? { ...u, nombre, correo, rol, estado }
+            : u
+        );
+      }
+    }
+  } else {
+    if (apiOnline) {
+      try {
+        const created = await apiFetch('/usuarios', {
+          method: 'POST', body: JSON.stringify(body)
+        });
+        users.push(created);
+      } catch {
+        const tmpId = 'U' + String(Date.now()).slice(-4);
+        users.push({ id: tmpId, nombre, correo, rol, estado });
+      }
+    } else {
+      const tmpId = 'U' + String(Date.now()).slice(-4);
+      users.push({ id: tmpId, nombre, correo, rol, estado });
+    }
+  }
+
+  renderUsers();
+  updateDashboard();
+  closeUserModal();
+}
+
+// ============================================================
+//  ELIMINAR USUARIO
+// ============================================================
+function openDeleteUserModal(id) {
+  deleteUserId = id;
+  const u = users.find(x => String(x.id) === String(id));
+  document.getElementById('deleteUserName').textContent =
+    `"${u ? u.nombre : ''}" será eliminado permanentemente.`;
+  document.getElementById('deleteUserModalOverlay').classList.add('open');
+}
+function closeDeleteUserModal() {
+  document.getElementById('deleteUserModalOverlay').classList.remove('open');
+  deleteUserId = null;
+}
+async function confirmDeleteUser() {
+  if (deleteUserId === null) return;
+  const esLocal = String(deleteUserId).startsWith('U');
+  if (!esLocal && apiOnline) {
+    try {
+      await apiFetch(`/usuarios/${deleteUserId}`, { method: 'DELETE' });
+    } catch { /* eliminar igual de la vista */ }
+  }
+  users = users.filter(u => String(u.id) !== String(deleteUserId));
+  renderUsers();
+  updateDashboard();
+  closeDeleteUserModal();
+}
+
+// ============================================================
+//  DASHBOARD — ESTADÍSTICAS EN TIEMPO REAL
+// ============================================================
+function updateDashboard() {
+  const totalStock = products.reduce((s, p) => s + Number(p.stock), 0);
+  const bajo       = products.filter(p => Number(p.stock) < 25).length;
+  const valor      = products.reduce((s, p) => s + (Number(p.stock) * Number(p.precio)), 0);
+  const top        = [...products].sort((a, b) => Number(b.stock) - Number(a.stock)).slice(0, 4);
+
+  document.getElementById('statTotalProductos').textContent  = products.length;
+  document.getElementById('statStockTotal').textContent      = `${totalStock} unidades en total`;
+  document.getElementById('statTotalUsuarios').textContent   = users.length;
+  document.getElementById('statUsuariosActivos').textContent = `${users.filter(u => u.estado === 'Activo').length} activos`;
+  document.getElementById('statStockBajo').textContent       = bajo;
+  document.getElementById('statStockBajoTxt').textContent    = bajo > 0 ? '⚠️ Requiere atención' : '✅ Stock saludable';
+  document.getElementById('statValorTotal').textContent      = '$' + valor.toFixed(2);
+
+  document.getElementById('topProductos').innerHTML = top.map((p, i) => `
+    <div class="product-row">
+      <div class="rank">${i + 1}</div>
+      <div class="product-info"><strong>${p.nombre}</strong><span>${p.categoria || '—'}</span></div>
+      <div class="product-qty">${p.stock}<small>unidades</small></div>
+    </div>`).join('');
+}
+
+// ============================================================
+//  NAVEGACIÓN
+// ============================================================
+function showPage(page) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('page-' + page).classList.add('active');
+  document.getElementById('nav-' + page).classList.add('active');
+}
+
+// Cerrar modales al hacer clic fuera
+['modalOverlay','userModalOverlay','deleteModalOverlay','deleteUserModalOverlay'].forEach(id => {
+  document.getElementById(id).addEventListener('click', function(e) {
+    if (e.target === this) this.classList.remove('open');
+  });
+});
 </script>
 </body>
 </html>
