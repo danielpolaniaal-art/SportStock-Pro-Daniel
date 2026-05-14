@@ -1,0 +1,89 @@
+[ {
+  "id" : 1,
+  "nombre" : "Usuario Uno",
+  "correo" : "usuario1@email.com",
+  "edad" : 21,
+  "rol" : "admin",
+  "estado" : true,
+  "contraseña" : "qweqweqwe"
+}, {
+  "id" : 2,
+  "nombre" : "Diego",
+  "correo" : "asdasd@hotmail.com",
+  "edad" : 11,
+  "rol" : "user",
+  "estado" : true,
+  "contraseña" : "qweqweqwe"
+}, {
+  "id" : 3,
+  "nombre" : "Juan Josè Cuellar",
+  "correo" : "cuellar@juan.com",
+  "edad" : 13,
+  "rol" : "admin",
+  "estado" : true,
+  "contraseña" : "12345"
+}, {
+  "id" : 4,
+  "nombre" : "Diego",
+  "correo" : "diego@diego.com",
+  "edad" : 23,
+  "rol" : "user",
+  "estado" : true,
+  "contraseña" : "asdasdasd"
+}, {
+  "id" : 5,
+  "nombre" : "Daniel",
+  "correo" : "daniel@gmail.com",
+  "edad" : 20,
+  "rol" : "Administrador",
+  "estado" : true,
+  "contraseña" : "123456"
+}, {
+  "id" : 6,
+  "nombre" : "Daniel",
+  "correo" : "daniel@gmail.com",
+  "edad" : 20,
+  "rol" : "Administrador",
+  "estado" : true,
+  "contraseña" : "Daniel123@"
+}, {
+  "id" : 7,
+  "nombre" : "Daniel",
+  "correo" : "daniel@gmail.com",
+  "edad" : 20,
+  "rol" : "Administrador",
+  "estado" : true,
+  "contraseña" : "Daniel123@"
+}, {
+  "id" : 8,
+  "nombre" : "Daniel",
+  "correo" : "daniel@gmail.com",
+  "edad" : 20,
+  "rol" : "Administrador",
+  "estado" : true,
+  "contraseña" : "Daniel123@"
+}, {
+  "id" : 9,
+  "nombre" : "Daniel",
+  "correo" : "daniel@gmail.com",
+  "edad" : 20,
+  "rol" : "Administrador",
+  "estado" : true,
+  "contraseña" : "Daniel123@"
+}, {
+  "id" : 10,
+  "nombre" : "Daniel",
+  "correo" : "daniel@gmail.com",
+  "edad" : 20,
+  "rol" : "Administrador",
+  "estado" : true,
+  "contraseña" : "Daniel123@"
+}, {
+  "id" : 11,
+  "nombre" : "Daniel",
+  "correo" : "sofia@gmail.com",
+  "edad" : 20,
+  "rol" : "Administrador",
+  "estado" : true,
+  "contraseña" : "Daniel123@"
+} ]
