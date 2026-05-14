@@ -5,163 +5,320 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SportStock Pro - Login</title>
     <link rel="stylesheet" href="CSS/styles.css">
+    <style>
+        .input-wrap { position: relative; }
+        .input-wrap input { padding-right: 40px !important; }
+        .ico { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); pointer-events: none; }
+
+        .toggle-pass {
+            position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
+            background: none; border: none; cursor: pointer; font-size: 18px; color: #9CA3AF; padding: 0;
+        }
+        .toggle-pass:hover { color: #5B4FE8; }
+
+        .strength-bar { display: flex; gap: 4px; margin-top: 8px; }
+        .strength-bar span { flex: 1; height: 4px; border-radius: 4px; background: #E5E7EB; transition: background 0.3s; }
+        .strength-label { font-size: 12px; font-weight: 600; margin-top: 4px; min-height: 16px; }
+
+        .req-box { background: #F9FAFB; border: 1.5px solid #E5E7EB; border-radius: 10px; padding: 12px 14px; margin-top: 6px; display: none; }
+        .req-box.visible { display: block; }
+        .req-list { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 5px 12px; }
+        .req-list li { font-size: 12px; color: #9CA3AF; display: flex; align-items: center; gap: 6px; }
+        .req-list li::before { content: '✗'; color: #EF4444; font-weight: 700; flex-shrink: 0; }
+        .req-list li.ok { color: #10B981; }
+        .req-list li.ok::before { content: '✔'; color: #10B981; }
+
+        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 300; align-items: center; justify-content: center; padding: 20px; }
+        .modal-box { background: white; border-radius: 20px; padding: 36px; width: 100%; max-width: 460px; box-shadow: 0 8px 40px rgba(91,79,232,0.18); margin: auto; }
+        .field { margin-bottom: 14px; }
+        .field label { display: block; margin-bottom: 6px; font-weight: 600; font-size: 14px; color: #1A1A2E; }
+        .field input {
+            width: 100%; padding: 12px; border: 1.5px solid #E5E7EB; border-radius: 10px;
+            font-size: 14px; outline: none; font-family: inherit; background: #F9FAFB;
+            transition: border-color 0.2s; box-sizing: border-box;
+        }
+        .field input:focus { border-color: #5B4FE8; background: white; }
+        .err { color: #EF4444; font-size: 12px; margin-top: 4px; display: none; }
+
+        .btn-row { display: flex; gap: 12px; margin-top: 22px; }
+        .btn-main { flex: 2; padding: 13px; background: #5B4FE8; color: white; border: none; border-radius: 12px; font-size: 15px; font-weight: 600; cursor: pointer; }
+        .btn-sec  { flex: 1; padding: 13px; background: white; color: #1A1A2E; border: 1.5px solid #E5E7EB; border-radius: 12px; font-size: 15px; font-weight: 600; cursor: pointer; }
+    </style>
 </head>
 <body>
-    <div class="login-page">
-        <div class="login-card">
+<div class="login-page">
+    <div class="login-card">
+        <div class="login-logo"><img src="assets/logo.png" alt="Logo"></div>
+        <h1>SportStock Pro</h1>
+        <p class="subtitle">Sistema de Gestión de Inventario</p>
 
-            <div class="login-logo">
-                <img src="assets/logo.png" alt="Logo">
+        <div class="form-group">
+            <label>Correo electrónico</label>
+            <div class="input-wrap">
+                <input type="text" id="uCorreo" placeholder="ejemplo@sportstock.com" oninput="chkEmail(this,'iconLogin','errLogin')">
+                <span class="ico" id="iconLogin"></span>
             </div>
+            <p class="err" id="errLogin">⚠️ Ingresa un correo válido (ej: usuario@empresa.com)</p>
+        </div>
 
-            <h1>SportStock Pro</h1>
-            <p class="subtitle">Sistema de Gestión de Inventario</p>
-
-            <!-- Campo usuario -->
-            <div class="form-group">
-                <label>Usuario</label>
-                <!-- CORRECCIÓN: El ID ahora coincide con el script -->
-                <input type="text" id="uCorreo" placeholder="ejemplo@sportstock.com">
-                <p id="errorUsuario" style="color:red; font-size:12px; margin-top:4px; display:none;">
-                    ⚠️ El usuario debe contener un @
-                </p>
+        <div class="form-group">
+            <label>Contraseña</label>
+            <div class="input-wrap">
+                <input type="password" id="uPass" placeholder="Tu contraseña"
+                    onfocus="showReq('reqLogin')" onblur="hideReq('reqLogin','uPass')" oninput="chkPass(this,'bL','labelLogin','L')">
+                <button class="toggle-pass" type="button" onclick="togglePass('uPass',this)" tabindex="-1">👁</button>
             </div>
-
-            <!-- Campo contraseña -->
-            <div class="form-group">
-                <label>Contraseña</label>
-                <!-- CORRECCIÓN: El ID ahora coincide con el script -->
-                <input type="password" id="uPass" placeholder="Mínimo 1 carácter especial">
-                <p id="errorPassword" style="color:red; font-size:12px; margin-top:4px; display:none;">
-                    ⚠️ La contraseña requiere un carácter especial
-                </p>
+            <div class="strength-bar"><span id="bL1"></span><span id="bL2"></span><span id="bL3"></span><span id="bL4"></span><span id="bL5"></span></div>
+            <div class="strength-label" id="labelLogin"></div>
+            <div class="req-box" id="reqLogin">
+                <ul class="req-list">
+                    <li id="rL-len">Mínimo 8 caracteres</li>
+                    <li id="rL-upper">Una mayúscula (A-Z)</li>
+                    <li id="rL-lower">Una minúscula (a-z)</li>
+                    <li id="rL-num">Un número (0-9)</li>
+                    <li id="rL-special">Un carácter especial (!@#...)</li>
+                </ul>
             </div>
+        </div>
 
-            <!-- Botones principales -->
-            <button class="btn-primary" onclick="login()">Ingresar</button>
-            
-            <p style="font-size: 14px; color: #6B7280; margin-top: 20px;">
-                ¿No tienes una cuenta? 
-                <a href="#" onclick="abrirRegistro(); return false;" style="color: #5B4FE8; font-weight: 600; text-decoration: none;">Regístrate aquí</a>
+        <button class="btn-primary" id="btnLogin" onclick="login()">Ingresar</button>
+
+        <p style="font-size:14px;color:#6B7280;margin-top:20px;">
+            ¿No tienes una cuenta?
+            <a href="#" onclick="openModal('modalReg');return false;" style="color:#5B4FE8;font-weight:600;text-decoration:none;">Regístrate aquí</a>
+        </p>
+        <a href="#" onclick="openModal('modalRec');return false;" style="display:block;margin-top:10px;font-size:13px;color:#9CA3AF;text-decoration:none;">
+            ¿Olvidaste tu contraseña?
+        </a>
+    </div>
+</div>
+
+<p class="login-footer">© 2026 SportStock Pro. Todos los derechos reservados.</p>
+
+<!-- MODAL REGISTRO -->
+<div id="modalReg" class="modal">
+    <div class="modal-box" style="overflow-y:auto;max-height:90vh;">
+        <h2 style="font-size:22px;font-weight:700;text-align:center;color:#1A1A2E;margin-bottom:6px;">Comienza ahora</h2>
+        <p style="text-align:center;color:#6B7280;font-size:14px;margin-bottom:22px;">Crea tu cuenta para gestionar tu inventario.</p>
+
+        <div class="field">
+            <label>Nombre Completo</label>
+            <input type="text" id="regNombre" placeholder="Tu nombre completo" oninput="chkMin(this,'errNombre',3)">
+            <p class="err" id="errNombre">⚠️ El nombre debe tener al menos 3 caracteres</p>
+        </div>
+        <div class="field">
+            <label>Correo Corporativo</label>
+            <div class="input-wrap">
+                <input type="text" id="regCorreo" placeholder="usuario@sportstock.com" style="padding-right:40px" oninput="chkEmail(this,'iconReg','errCorreo')">
+                <span class="ico" id="iconReg"></span>
+            </div>
+            <p class="err" id="errCorreo">⚠️ Ingresa un correo válido con @ y dominio</p>
+        </div>
+        <div class="field">
+            <label>Edad</label>
+            <input type="number" id="regEdad" placeholder="Ej: 25" min="1" max="99" oninput="chkEdad()">
+            <p class="err" id="errEdad">⚠️ La edad debe estar entre 1 y 99 años</p>
+        </div>
+        <div class="field">
+            <label>Contraseña</label>
+            <div class="input-wrap">
+                <input type="password" id="regPass" placeholder="Crea una contraseña segura" style="padding-right:44px"
+                    onfocus="showReq('reqReg')" onblur="hideReq('reqReg','regPass')" oninput="chkPass(this,'bR','labelReg','R')">
+                <button class="toggle-pass" type="button" onclick="togglePass('regPass',this)" tabindex="-1">👁</button>
+            </div>
+            <div class="strength-bar"><span id="bR1"></span><span id="bR2"></span><span id="bR3"></span><span id="bR4"></span><span id="bR5"></span></div>
+            <div class="strength-label" id="labelReg"></div>
+            <div class="req-box" id="reqReg">
+                <ul class="req-list">
+                    <li id="rR-len">Mínimo 8 caracteres</li>
+                    <li id="rR-upper">Una mayúscula (A-Z)</li>
+                    <li id="rR-lower">Una minúscula (a-z)</li>
+                    <li id="rR-num">Un número (0-9)</li>
+                    <li id="rR-special">Un carácter especial (!@#...)</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="btn-row">
+            <button class="btn-main" onclick="registrar()">Crear cuenta</button>
+            <button class="btn-sec"  onclick="closeModal('modalReg')">Cancelar</button>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL RECUPERAR -->
+<div id="modalRec" class="modal">
+    <div class="modal-box" style="text-align:center;">
+        <div id="recForm">
+            <div style="font-size:40px;margin-bottom:12px;">🔐</div>
+            <h2 style="font-size:20px;font-weight:700;margin-bottom:8px;">Recuperar acceso</h2>
+            <p style="color:#6B7280;font-size:14px;margin-bottom:24px;">Te enviaremos un enlace para restablecer tu contraseña.</p>
+            <div class="field" style="text-align:left;">
+                <label>Correo Electrónico</label>
+                <input type="text" id="correoRec" placeholder="ejemplo@sportstock.com">
+                <p class="err" id="errRec">⚠️ Correo inválido</p>
+            </div>
+            <div class="btn-row" style="margin-top:8px;">
+                <button class="btn-main" onclick="enviarRec()">Enviar enlace</button>
+                <button class="btn-sec"  onclick="closeModal('modalRec')">Cerrar</button>
+            </div>
+        </div>
+        <div id="recOk" style="display:none;">
+            <div style="font-size:48px;margin-bottom:16px;">✅</div>
+            <h2 style="font-size:20px;font-weight:700;margin-bottom:8px;">Revisa tu bandeja</h2>
+            <p style="color:#6B7280;font-size:14px;margin-bottom:24px;">
+                Hemos enviado las instrucciones a <strong id="correoMostrado"></strong>.
             </p>
-
-            <a href="#" class="forgot-link" onclick="abrirRecuperar(); return false;" style="display: block; margin-top: 10px; text-decoration: none; font-size: 13px; color: #9CA3AF;">¿Olvidaste tu contraseña?</a>
-
+            <button class="btn-main" style="flex:1;width:100%;" onclick="closeModal('modalRec')">Entendido</button>
         </div>
     </div>
+</div>
 
-    <p class="login-footer">© 2026 SportStock Pro. Todos los derechos reservados.</p>
+<script>
+const API = 'http://localhost:8080';
+const RE = {
+    email:   /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+    upper:   /[A-Z]/,
+    lower:   /[a-z]/,
+    num:     /[0-9]/,
+    special: /[!@#$%^&*()\-_=+\[\]{};':",.<>?\/\\|`~]/
+};
 
-    <!-- MODAL: REGISTRO -->
-    <div id="modalRegistro" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.4); z-index:300; align-items:center; justify-content:center; padding:20px;">
-        <div style="background:white; border-radius:20px; padding:35px 36px; width:100%; max-width:440px; box-shadow:0 8px 40px rgba(91,79,232,0.15);">
-            <h2 style="font-size:22px; font-weight:700; margin-bottom:8px; text-align:center; color:#1A1A2E;">Comienza ahora</h2>
-            <p style="text-align:center; color:#6B7280; font-size:14px; margin-bottom:25px;">Crea tu cuenta para gestionar tu inventario.</p>
-            <div class="form-group" style="margin-bottom: 15px;">
-                <label style="display:block; margin-bottom:5px; font-weight:600; font-size:14px;">Nombre Completo</label>
-                <input type="text" id="regNombre" placeholder="Tu nombre" style="width:100%; padding:12px; border:1px solid #E5E7EB; border-radius:10px;">
-            </div>
-            <div class="form-group" style="margin-bottom: 15px;">
-                <label style="display:block; margin-bottom:5px; font-weight:600; font-size:14px;">Correo Corporativo</label>
-                <input type="email" id="regCorreo" placeholder="usuario@sportstock.com" style="width:100%; padding:12px; border:1px solid #E5E7EB; border-radius:10px;">
-            </div>
-            <div class="form-group" style="margin-bottom: 25px;">
-                <label style="display:block; margin-bottom:5px; font-weight:600; font-size:14px;">Contraseña</label>
-                <input type="password" id="regPass" placeholder="Crea una clave segura" style="width:100%; padding:12px; border:1px solid #E5E7EB; border-radius:10px;">
-            </div>
-            <div style="display:flex; gap:12px;">
-                <button onclick="registrarUsuario()" style="flex:2; padding:13px; background:#5B4FE8; color:white; border:none; border-radius:12px; font-size:15px; font-weight:600; cursor:pointer;">Crear cuenta</button>
-                <button onclick="cerrarRegistro()" style="flex:1; padding:13px; background:white; color:#1A1A2E; border:1.5px solid #E5E7EB; border-radius:12px; font-size:15px; font-weight:600; cursor:pointer;">Cancelar</button>
-            </div>
-        </div>
-    </div>
+// ── Modales ──────────────────────────────────────────────
+function openModal(id) { document.getElementById(id).style.display = 'flex'; }
+function closeModal(id) { document.getElementById(id).style.display = 'none'; }
 
-    <!-- MODAL: RECUPERAR -->
-    <div id="modalRecuperar" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.4); z-index:300; align-items:center; justify-content:center; padding:20px;">
-        <div style="background:white; border-radius:20px; padding:40px 36px; width:100%; max-width:440px; box-shadow:0 8px 40px rgba(91,79,232,0.15); text-align:center;">
-            <div id="vistaFormulario">
-                <div style="font-size:40px; margin-bottom:12px;">🔐</div>
-                <h2 style="font-size:20px; font-weight:700; margin-bottom:8px;">Recuperar acceso</h2>
-                <p style="color:#6B7280; font-size:14px; margin-bottom:24px;">Te enviaremos un enlace para restablecer tu contraseña.</p>
-                <div class="form-group" style="text-align:left;">
-                    <label>Correo Electrónico</label>
-                    <input type="text" id="correoRecuperar" placeholder="ejemplo@sportstock.com" style="width:100%; padding:12px; border:1px solid #E5E7EB; border-radius:10px;"/>
-                    <p id="errorRecuperar" style="color:red; font-size:12px; margin-top:4px; display:none;">⚠️ Correo inválido</p>
-                </div>
-                <div style="display:flex; gap:12px; margin-top:8px;">
-                    <button onclick="enviarRecuperacion()" style="flex:1; padding:13px; background:#5B4FE8; color:white; border:none; border-radius:12px; font-size:15px; font-weight:600; cursor:pointer;">Enviar enlace</button>
-                    <button onclick="cerrarRecuperar()" style="flex:1; padding:13px; background:white; color:#1A1A2E; border:1.5px solid #E5E7EB; border-radius:12px; font-size:15px; font-weight:600; cursor:pointer;">Cerrar</button>
-                </div>
-            </div>
-            <div id="vistaConfirmacion" style="display:none;">
-                <div style="font-size:48px; margin-bottom:16px;">✅</div>
-                <h2 style="font-size:20px; font-weight:700; margin-bottom:8px;">Revisa tu bandeja</h2>
-                <p style="color:#6B7280; font-size:14px; margin-bottom:24px;">Hemos enviado las instrucciones a <strong id="correoMostrado"></strong>.</p>
-                <button onclick="cerrarRecuperar()" style="width:100%; padding:13px; background:#5B4FE8; color:white; border:none; border-radius:12px; font-size:15px; font-weight:600; cursor:pointer;">Entendido</button>
-            </div>
-        </div>
-    </div>
+// ── Toggle contraseña ─────────────────────────────────────
+function togglePass(id, btn) {
+    const inp = document.getElementById(id);
+    inp.type = inp.type === 'password' ? 'text' : 'password';
+    btn.textContent = inp.type === 'text' ? '🙈' : '👁';
+}
 
-    <script>
-    function login() {
-        const user = document.getElementById('uCorreo').value.trim();
-        const pass = document.getElementById('uPass').value.trim();
+// ── Requisitos ────────────────────────────────────────────
+function showReq(id) { document.getElementById(id).classList.add('visible'); }
+function hideReq(id, inputId) {
+    if (!document.getElementById(inputId).value)
+        document.getElementById(id).classList.remove('visible');
+}
 
-        // Validación de formato de correo
-        const correoValido = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+// ── Validación correo ─────────────────────────────────────
+function chkEmail(inp, icoId, errId) {
+    const ok = RE.email.test(inp.value.trim());
+    document.getElementById(icoId).textContent = inp.value ? (ok ? '✅' : '❌') : '';
+    document.getElementById(errId).style.display = (inp.value && !ok) ? 'block' : 'none';
+}
 
-        if (!correoValido.test(user)) {
-            alert("Por favor, ingrese un correo válido (ejemplo: admin@admin.com)");
-            return;
-        }
+// ── Validación mínimo de caracteres ───────────────────────
+function chkMin(inp, errId, min) {
+    document.getElementById(errId).style.display = inp.value.trim().length >= min ? 'none' : 'block';
+}
 
-        if (pass.length === 0) {
-            alert("La contraseña no puede estar vacía");
-            return;
-        }
+// ── Validación edad ───────────────────────────────────────
+function chkEdad() {
+    const v = parseInt(document.getElementById('regEdad').value);
+    document.getElementById('errEdad').style.display = (v >= 1 && v <= 99) ? 'none' : 'block';
+}
 
-        // Redirección directa
-        window.location.href = 'dashboard.html';
+// ── Barra de fortaleza + requisitos ───────────────────────
+const SCORES = ['','Muy débil','Débil','Regular','Buena','Fuerte 🔒'];
+const COLORS = ['','#EF4444','#EF4444','#F59E0B','#F59E0B','#10B981'];
+const BARS   = ['','active-red','active-red','active-orange','active-orange','active-green'];
+
+function chkPass(inp, barPfx, labelId, reqPfx) {
+    const p = inp.value;
+    const checks = { len: p.length>=8, upper: RE.upper.test(p), lower: RE.lower.test(p), num: RE.num.test(p), special: RE.special.test(p) };
+    const score = Math.min(5, [p.length>=8, p.length>=12, RE.upper.test(p), RE.lower.test(p), RE.num.test(p), RE.special.test(p)].filter(Boolean).length);
+
+    for (let i=1; i<=5; i++) {
+        const el = document.getElementById(`${barPfx}${i}`);
+        el.className = i <= score ? BARS[score] : '';
     }
+    const lbl = document.getElementById(labelId);
+    lbl.textContent = p ? SCORES[score] : '';
+    lbl.style.color = COLORS[score] || '';
 
-    function abrirRegistro() {
-        document.getElementById('regNombre').value = '';
-        document.getElementById('regCorreo').value = '';
-        document.getElementById('regPass').value = '';
-        document.getElementById('modalRegistro').style.display = 'flex';
+    for (const [k, ok] of Object.entries(checks)) {
+        const li = document.getElementById(`r${reqPfx}-${k}`);
+        if (li) li.className = ok ? 'ok' : '';
     }
-    function cerrarRegistro() { document.getElementById('modalRegistro').style.display = 'none'; }
-    
-    function registrarUsuario() {
-        const nombre = document.getElementById('regNombre').value.trim();
-        if (nombre && document.getElementById('regCorreo').value.includes('@')) {
-            alert("Cuenta creada para " + nombre);
-            cerrarRegistro();
-        } else {
-            alert("Verifique los datos ingresados.");
-        }
-    }
+}
 
-    function abrirRecuperar() {
-        document.getElementById('vistaFormulario').style.display = 'block';
-        document.getElementById('vistaConfirmacion').style.display = 'none';
-        document.getElementById('modalRecuperar').style.display = 'flex';
-    }
-    function cerrarRecuperar() { document.getElementById('modalRecuperar').style.display = 'none'; }
-    
-    function enviarRecuperacion() {
-        const correo = document.getElementById('correoRecuperar').value.trim();
-        if (correo.includes('@')) {
-            document.getElementById('correoMostrado').textContent = correo;
-            document.getElementById('vistaFormulario').style.display = 'none';
-            document.getElementById('vistaConfirmacion').style.display = 'block';
-        }
-    }
+function passOk(p) {
+    return p.length>=8 && RE.upper.test(p) && RE.lower.test(p) && RE.num.test(p) && RE.special.test(p);
+}
 
-    window.onclick = function(e) {
-        if (e.target == document.getElementById('modalRecuperar')) cerrarRecuperar();
-        if (e.target == document.getElementById('modalRegistro')) cerrarRegistro();
+// ── LOGIN ─────────────────────────────────────────────────
+async function login() {
+    const correo = document.getElementById('uCorreo').value.trim();
+    const pass   = document.getElementById('uPass').value;
+
+    if (!RE.email.test(correo)) { document.getElementById('errLogin').style.display='block'; document.getElementById('uCorreo').focus(); return; }
+    if (!passOk(pass))          { showReq('reqLogin'); document.getElementById('uPass').focus(); return; }
+
+    const btn = document.getElementById('btnLogin');
+    btn.textContent = 'Ingresando...'; btn.disabled = true;
+
+    try {
+        const res = await fetch(`${API}/usuarios/login`, {
+            method: 'POST', headers: {'Content-Type':'application/json'},
+            body: JSON.stringify({ correo, contraseña: pass })
+        });
+        if (res.ok) window.location.href = 'dashboard.html';
+        else if (res.status===401||res.status===404) alert('❌ Correo o contraseña incorrectos.');
+        else alert('Error del servidor. Intenta más tarde.');
+    } catch {
+        window.location.href = 'dashboard.html'; // modo demo
+    } finally {
+        btn.textContent = 'Ingresar'; btn.disabled = false;
     }
-    </script>
+}
+
+// ── REGISTRO ──────────────────────────────────────────────
+async function registrar() {
+    const nombre = document.getElementById('regNombre').value.trim();
+    const correo = document.getElementById('regCorreo').value.trim();
+    const edad   = parseInt(document.getElementById('regEdad').value)||0;
+    const pass   = document.getElementById('regPass').value;
+
+    if (nombre.length<3)          { document.getElementById('errNombre').style.display='block'; return; }
+    if (!RE.email.test(correo))   { document.getElementById('errCorreo').style.display='block'; return; }
+    if (edad<1||edad>99)          { document.getElementById('errEdad').style.display='block';   return; }
+    if (!passOk(pass))            { showReq('reqReg'); return; }
+
+    try {
+        const res = await fetch(`${API}/usuarios`, {
+            method: 'POST', headers: {'Content-Type':'application/json'},
+            body: JSON.stringify({ nombre, correo, edad, rol:'Almacenista', estado:true, contraseña:pass })
+        });
+        if (res.ok||res.status===201) { alert(`✅ Cuenta creada para ${nombre}. Ya puedes iniciar sesión.`); closeModal('modalReg'); }
+        else alert('No se pudo crear la cuenta. Verifica los datos.');
+    } catch {
+        alert(`✅ Cuenta creada para ${nombre} (modo demo).`); closeModal('modalReg');
+    }
+}
+
+// ── RECUPERAR ─────────────────────────────────────────────
+function enviarRec() {
+    const correo = document.getElementById('correoRec').value.trim();
+    if (!RE.email.test(correo)) { document.getElementById('errRec').style.display='block'; return; }
+    document.getElementById('correoMostrado').textContent = correo;
+    document.getElementById('recForm').style.display = 'none';
+    document.getElementById('recOk').style.display   = 'block';
+}
+
+// Cerrar modales al abrir recuperar (reiniciar vista)
+function openModalRec() {
+    document.getElementById('recForm').style.display = 'block';
+    document.getElementById('recOk').style.display   = 'none';
+    openModal('modalRec');
+}
+
+document.addEventListener('keydown', e => { if (e.key==='Enter') login(); });
+window.onclick = e => {
+    if (e.target.id==='modalRec') closeModal('modalRec');
+    if (e.target.id==='modalReg') closeModal('modalReg');
+};
+</script>
 </body>
 </html>

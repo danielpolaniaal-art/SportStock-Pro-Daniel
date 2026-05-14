@@ -1,30 +1,23 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>SportStock Pro - Dashboard</title>
   <link rel="stylesheet" href="CSS/styles.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
-
 <div class="app">
 
   <!-- SIDEBAR -->
   <aside class="sidebar">
     <div class="sidebar-brand">
-      <div class="brand-icon">
-        <img src="assets/logo.png" alt="Logo">
-      </div>
-      <div>
-        <h2>SportStock Pro</h2>
-        <span>Admin Panel</span>
-      </div>
+      <div class="brand-icon"><img src="assets/logo.png" alt="Logo"></div>
+      <div><h2>SportStock Pro</h2><span>Admin Panel</span></div>
     </div>
-
     <nav>
-      <button class="nav-item active" id="nav-inicio" onclick="showPage('inicio')">
+      <button class="nav-item active" id="nav-inicio"     onclick="showPage('inicio')">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
         Inicio
       </button>
@@ -37,7 +30,6 @@
         Usuarios
       </button>
     </nav>
-
     <a href="index.html" class="sidebar-logout">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
       Cerrar Sesión
@@ -47,162 +39,126 @@
   <!-- MAIN -->
   <main class="main">
 
-    <!-- ======================== PÁGINA: INICIO ======================== -->
+    <!-- INICIO -->
     <div class="page active" id="page-inicio">
       <div class="page-header">
         <h1>Panel de Control</h1>
         <p>Bienvenido al sistema de gestión de inventario</p>
       </div>
-
       <div class="cards-row">
         <div class="stat-card">
-          <div class="info">
-            <p>Total Productos</p>
-            <h2 id="statTotalProductos">—</h2>
-            <div class="trend" id="statStockTotal">Cargando...</div>
-          </div>
+          <div class="info"><p>Total Productos</p><h2 id="statTotalProductos">—</h2><div class="trend" id="statStockTotal">Cargando...</div></div>
           <div class="stat-icon blue"><i class="fa-solid fa-box"></i></div>
         </div>
-
         <div class="stat-card">
-          <div class="info">
-            <p>Total Usuarios</p>
-            <h2 id="statTotalUsuarios">—</h2>
-            <div class="trend" id="statUsuariosActivos">Cargando...</div>
-          </div>
+          <div class="info"><p>Total Usuarios</p><h2 id="statTotalUsuarios">—</h2><div class="trend" id="statUsuariosActivos">Cargando...</div></div>
           <div class="stat-icon purple"><i class="fa-solid fa-user-group"></i></div>
         </div>
-
         <div class="stat-card">
-          <div class="info">
-            <p>Stock Bajo (&lt;25)</p>
-            <h2 id="statStockBajo">—</h2>
-            <div class="trend warn" id="statStockBajoTxt">Cargando...</div>
-          </div>
+          <div class="info"><p>Stock Bajo (&lt;25)</p><h2 id="statStockBajo">—</h2><div class="trend warn" id="statStockBajoTxt">Cargando...</div></div>
           <div class="stat-icon orange"><i class="fa-solid fa-triangle-exclamation"></i></div>
         </div>
-
         <div class="stat-card">
-          <div class="info">
-            <p>Valor Total Inventario</p>
-            <h2 id="statValorTotal">—</h2>
-            <div class="trend">Stock × Precio</div>
-          </div>
+          <div class="info"><p>Valor Total Inventario</p><h2 id="statValorTotal">—</h2><div class="trend">Stock × Precio</div></div>
           <div class="stat-icon green"><i class="fa-solid fa-dollar-sign"></i></div>
         </div>
       </div>
-
       <div class="bottom-grid">
+
+        <!-- Productos con Mayor Stock -->
         <div class="card">
           <div class="card-title">🛒 Productos con Mayor Stock</div>
           <div id="topProductos"><p style="color:#9CA3AF;padding:16px;">Cargando...</p></div>
         </div>
 
+        <!-- ✅ NUEVA TARJETA: Resumen de Actividad (igual a Figma) -->
         <div class="card">
-          <div class="card-title">↗ Estado del Servidor API</div>
-          <div class="activity-item">
-            <div>
-              <p class="label">Backend Java</p>
-              <p class="value" id="apiStatus" style="font-size:14px;">Verificando...</p>
-            </div>
-            <div class="stat-icon blue"><i class="fa-solid fa-server"></i></div>
+          <div class="card-title">
+            <span style="color:#10B981; font-size:18px;">↗</span> Resumen de Actividad
           </div>
-          <div class="activity-item">
+
+          <!-- Productos Registrados — fondo azul -->
+          <div class="activity-item activity-blue">
             <div>
-              <p class="label">Endpoint Productos</p>
-              <p class="value" style="font-size:14px;">localhost:8080/productos</p>
+              <p class="label">Productos Registrados</p>
+              <p class="value" id="actProductos">—</p>
             </div>
-            <div class="stat-icon purple"><i class="fa-solid fa-plug"></i></div>
+            <div class="stat-icon blue"><i class="fa-solid fa-box"></i></div>
           </div>
-          <div class="activity-item">
+
+          <!-- Actualizaciones Hoy — fondo morado -->
+          <div class="activity-item activity-purple">
             <div>
-              <p class="label">Endpoint Usuarios</p>
-              <p class="value" style="font-size:14px;">localhost:8080/usuarios</p>
+              <p class="label">Actualizaciones Hoy</p>
+              <p class="value" id="actActualizaciones">18</p>
             </div>
-            <div class="stat-icon green"><i class="fa-solid fa-plug"></i></div>
+            <div class="stat-icon purple"><i class="fa-solid fa-layer-group"></i></div>
+          </div>
+
+          <!-- Alertas Pendientes — fondo amarillo -->
+          <div class="activity-item activity-orange">
+            <div>
+              <p class="label">Alertas Pendientes</p>
+              <p class="value" id="actAlertas">—</p>
+            </div>
+            <div class="stat-icon orange"><i class="fa-solid fa-triangle-exclamation"></i></div>
           </div>
         </div>
+
       </div>
     </div>
 
-    <!-- ======================== PÁGINA: INVENTARIO ======================== -->
+    <!-- INVENTARIO -->
     <div class="page" id="page-inventario">
       <div class="page-header">
         <h1>Gestión de Inventario</h1>
         <p>Administra todos los productos del almacén deportivo</p>
       </div>
-
       <div class="toolbar">
         <div class="search-box">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-          <input type="text" id="searchInput" placeholder="Buscar por ID, nombre o categoría..." oninput="filterTable()" />
+          <input type="text" id="searchInput" placeholder="Buscar por ID, nombre o categoría..." oninput="filterTable()"/>
         </div>
         <button class="btn-add" onclick="openModal()">+ Registrar Artículo</button>
       </div>
-
-      <!-- Banner de estado de conexión -->
       <div id="apiBanner" style="display:none; padding:10px 16px; border-radius:10px; margin-bottom:12px; font-size:13px;"></div>
-
       <div class="table-wrap">
         <table>
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Nombre del Artículo</th>
-              <th>Categoría</th>
-              <th>Stock</th>
-              <th>Precio</th>
-              <th>Acciones</th>
-            </tr>
-          </thead>
-          <tbody id="tableBody">
-            <tr><td colspan="6" style="text-align:center;color:#9CA3AF;padding:32px;">Cargando productos...</td></tr>
-          </tbody>
+          <thead><tr><th>ID</th><th>Nombre del Artículo</th><th>Categoría</th><th>Stock</th><th>Precio</th><th>Acciones</th></tr></thead>
+          <tbody id="tableBody"><tr><td colspan="6" style="text-align:center;color:#9CA3AF;padding:32px;">Cargando productos...</td></tr></tbody>
         </table>
         <div class="table-footer" id="tableFooter"></div>
       </div>
     </div>
 
-    <!-- ======================== PÁGINA: USUARIOS ======================== -->
+    <!-- USUARIOS -->
     <div class="page" id="page-usuarios">
       <div class="page-header">
         <h1>Gestión de Usuarios</h1>
         <p>Administra los usuarios del sistema</p>
       </div>
-
       <div class="users-cards">
-        <div class="user-stat">
-          <div class="info"><p>Total Usuarios</p><h2 id="totalUsuarios">—</h2></div>
-          <div class="stat-icon blue"><i class="fa-solid fa-user-group"></i></div>
-        </div>
-        <div class="user-stat">
-          <div class="info"><p>Administradores</p><h2 id="totalAdmins">—</h2></div>
-          <div class="stat-icon purple"><i class="fa-solid fa-shield"></i></div>
-        </div>
-        <div class="user-stat">
-          <div class="info"><p>Usuarios Activos</p><h2 id="totalActivos">—</h2></div>
-          <div class="stat-icon green"><i class="fa-solid fa-user-plus"></i></div>
-        </div>
+        <div class="user-stat"><div class="info"><p>Total Usuarios</p><h2 id="totalUsuarios">—</h2></div><div class="stat-icon blue"><i class="fa-solid fa-user-group"></i></div></div>
+        <div class="user-stat"><div class="info"><p>Administradores</p><h2 id="totalAdmins">—</h2></div><div class="stat-icon purple"><i class="fa-solid fa-shield"></i></div></div>
+        <div class="user-stat"><div class="info"><p>Usuarios Activos</p><h2 id="totalActivos">—</h2></div><div class="stat-icon green"><i class="fa-solid fa-user-plus"></i></div></div>
       </div>
-
       <div class="user-list-header">
         <h3>Lista de Usuarios</h3>
         <button class="btn-add" onclick="openUserModal()">👤 Agregar Usuario</button>
       </div>
-
       <div id="userList"><p style="color:#9CA3AF;padding:16px;">Cargando usuarios...</p></div>
     </div>
 
   </main>
 </div>
 
-<!-- MODAL: REGISTRAR / EDITAR PRODUCTO -->
+<!-- MODAL: PRODUCTO -->
 <div class="modal-overlay" id="modalOverlay">
   <div class="modal">
     <h2 id="modalTitle">Registrar Nuevo Artículo</h2>
     <div class="form-group">
       <label>Nombre del Producto <span class="required">*</span></label>
-      <input type="text" id="mNombre" placeholder="Ej: Balón de Fútbol Profesional" />
+      <input type="text" id="mNombre" placeholder="Ej: Balón de Fútbol Profesional"/>
     </div>
     <div class="form-group">
       <label>Categoría <span class="required">*</span></label>
@@ -216,17 +172,12 @@
     <div class="form-row">
       <div class="form-group">
         <label>Cantidad en Stock <span class="required">*</span></label>
-        <input type="number" id="mCantidad" placeholder="0" min="0" />
+        <input type="number" id="mCantidad" placeholder="0" min="0"/>
       </div>
       <div class="form-group">
         <label>Precio Unitario <span class="required">*</span></label>
-        <input type="number" id="mPrecio" placeholder="$ 0.00" min="0" step="0.01" />
+        <input type="number" id="mPrecio" placeholder="$ 0.00" min="0" step="0.01"/>
       </div>
-    </div>
-    <div class="form-group">
-      <label>Descripción</label>
-      <textarea id="mDesc" placeholder="Describe las características del producto..."></textarea>
-      <p class="hint">Opcional: Agrega detalles adicionales sobre el producto</p>
     </div>
     <div class="modal-actions">
       <button class="btn-save" id="btnGuardar" onclick="saveProduct()">Guardar Producto</button>
@@ -235,18 +186,28 @@
   </div>
 </div>
 
-<!-- MODAL: AGREGAR / EDITAR USUARIO -->
+<!-- MODAL: USUARIO -->
 <div class="modal-overlay" id="userModalOverlay">
   <div class="modal">
     <h2 id="userModalTitle">Agregar Nuevo Usuario</h2>
     <div class="form-row">
       <div class="form-group">
         <label>Nombre Completo <span class="required">*</span></label>
-        <input type="text" id="uNombre" placeholder="Ej: Ana Torres" />
+        <input type="text" id="uNombre" placeholder="Ej: Ana Torres"/>
       </div>
       <div class="form-group">
         <label>Correo Electrónico <span class="required">*</span></label>
-        <input type="email" id="uEmail" placeholder="usuario@sportstock.com" />
+        <input type="email" id="uEmail" placeholder="usuario@sportstock.com"/>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Edad <span class="required">*</span></label>
+        <input type="number" id="uEdad" placeholder="Ej: 28" min="1" max="99"/>
+      </div>
+      <div class="form-group">
+        <label>Contraseña <span class="required">*</span></label>
+        <input type="password" id="uPassword" placeholder="Contraseña del usuario"/>
       </div>
     </div>
     <div class="form-row">
@@ -272,7 +233,7 @@
   </div>
 </div>
 
-<!-- MODAL: CONFIRMAR ELIMINACIÓN PRODUCTO -->
+<!-- MODAL: CONFIRMAR ELIMINAR PRODUCTO -->
 <div class="modal-overlay" id="deleteModalOverlay">
   <div class="modal" style="max-width:420px;text-align:center;">
     <div style="font-size:48px;margin-bottom:16px;">🗑️</div>
@@ -285,7 +246,7 @@
   </div>
 </div>
 
-<!-- MODAL: CONFIRMAR ELIMINACIÓN USUARIO -->
+<!-- MODAL: CONFIRMAR ELIMINAR USUARIO -->
 <div class="modal-overlay" id="deleteUserModalOverlay">
   <div class="modal" style="max-width:420px;text-align:center;">
     <div style="font-size:48px;margin-bottom:16px;">👤</div>
@@ -299,495 +260,327 @@
 </div>
 
 <script>
-// ============================================================
-//  CONFIGURACIÓN
-// ============================================================
-const API = 'http://localhost:8080';
+// ── Configuración ──────────────────────────────────────────
+const API_BASE = 'http://localhost:8080/api';
 
-// ============================================================
-//  DATOS QUEMADOS (siempre visibles aunque el backend esté apagado)
-// ============================================================
+// ── Datos locales (modo sin backend) ──────────────────────
 const PRODUCTOS_BASE = [
-  { id:'L001', nombre:'Balón de Fútbol Profesional',  categoria:'Fútbol',     stock:45,  precio:29.99,  descripcion:'' },
-  { id:'L002', nombre:'Guantes de Portero',           categoria:'Fútbol',     stock:23,  precio:34.50,  descripcion:'' },
-  { id:'L003', nombre:'Balón de Baloncesto Spalding', categoria:'Baloncesto', stock:31,  precio:42.00,  descripcion:'' },
-  { id:'L004', nombre:'Raqueta de Tenis Wilson',      categoria:'Tenis',      stock:15,  precio:89.99,  descripcion:'' },
-  { id:'L005', nombre:'Zapatillas Running Nike',      categoria:'Running',    stock:58,  precio:119.99, descripcion:'' },
-  { id:'L006', nombre:'Gafas de Natación',            categoria:'Natación',   stock:67,  precio:18.50,  descripcion:'' },
-  { id:'L007', nombre:'Mancuernas 5kg (Par)',         categoria:'Gimnasio',   stock:42,  precio:24.99,  descripcion:'' },
-  { id:'L008', nombre:'Espinilleras Profesionales',   categoria:'Fútbol',     stock:38,  precio:15.99,  descripcion:'' },
-  { id:'L009', nombre:'Casco de Ciclismo',            categoria:'Ciclismo',   stock:22,  precio:54.99,  descripcion:'' },
-  { id:'L010', nombre:'Botella Deportiva 1L',         categoria:'Accesorios', stock:120, precio:9.99,   descripcion:'' },
-  { id:'L011', nombre:'Calcetines Running (Pack 3)',  categoria:'Running',    stock:85,  precio:12.50,  descripcion:'' },
-  { id:'L012', nombre:'Pelotas de Tenis (Pack 3)',    categoria:'Tenis',      stock:94,  precio:8.99,   descripcion:'' },
+  { id:'L001', nombre:'Balón de Fútbol Profesional',  categoria:'Fútbol',     stock:45,  precio:29.99 },
+  { id:'L002', nombre:'Guantes de Portero',           categoria:'Fútbol',     stock:23,  precio:34.50 },
+  { id:'L003', nombre:'Balón de Baloncesto Spalding', categoria:'Baloncesto', stock:31,  precio:42.00 },
+  { id:'L004', nombre:'Raqueta de Tenis Wilson',      categoria:'Tenis',      stock:15,  precio:89.99 },
+  { id:'L005', nombre:'Zapatillas Running Nike',      categoria:'Running',    stock:58,  precio:119.99 },
+  { id:'L006', nombre:'Gafas de Natación',            categoria:'Natación',   stock:67,  precio:18.50 },
+  { id:'L007', nombre:'Mancuernas 5kg (Par)',         categoria:'Gimnasio',   stock:42,  precio:24.99 },
+  { id:'L008', nombre:'Espinilleras Profesionales',   categoria:'Fútbol',     stock:38,  precio:15.99 },
+  { id:'L009', nombre:'Casco de Ciclismo',            categoria:'Ciclismo',   stock:22,  precio:54.99 },
+  { id:'L010', nombre:'Botella Deportiva 1L',         categoria:'Accesorios', stock:120, precio:9.99  },
+  { id:'L011', nombre:'Calcetines Running (Pack 3)',  categoria:'Running',    stock:85,  precio:12.50 },
+  { id:'L012', nombre:'Pelotas de Tenis (Pack 3)',    categoria:'Tenis',      stock:94,  precio:8.99  },
 ];
-
 const USUARIOS_BASE = [
-  { id:'U001', nombre:'Carlos Méndez',  correo:'carlos@sportstock.com', rol:'Administrador', estado:'Activo' },
-  { id:'U002', nombre:'María González', correo:'maria@sportstock.com',  rol:'Gerente',       estado:'Activo' },
-  { id:'U003', nombre:'Juan Pérez',     correo:'juan@sportstock.com',   rol:'Almacenista',   estado:'Activo' },
+  { id:'U001', nombre:'Carlos Méndez',  correo:'carlos@sportstock.com', edad:30, rol:'Administrador', estado:'Activo' },
+  { id:'U002', nombre:'María González', correo:'maria@sportstock.com',  edad:28, rol:'Gerente',       estado:'Activo' },
+  { id:'U003', nombre:'Juan Pérez',     correo:'juan@sportstock.com',   edad:25, rol:'Almacenista',   estado:'Activo' },
 ];
 
-// ============================================================
-//  ESTADO GLOBAL
-// ============================================================
-let products = [];   // datos quemados + los del backend
-let users    = [];
-let apiOnline = false;
+// ── Estado global ──────────────────────────────────────────
+let products = [], users = [], apiOnline = false;
+let editProductId = null, editUserId = null;
+let deleteProductId = null, deleteUserId = null;
 
-let editProductId   = null;
-let editUserId      = null;
-let deleteProductId = null;
-let deleteUserId    = null;
+// ── Helpers ────────────────────────────────────────────────
+const $       = id => document.getElementById(id);
+const set     = (id, v) => { const e=$(id); if(e) e.textContent=v; };
+const esLocal = id => isNaN(Number(id));
 
-// ============================================================
-//  HELPERS
-// ============================================================
-async function apiFetch(path, options = {}) {
-  const res = await fetch(API + path, {
-    headers: { 'Content-Type': 'application/json' },
-    ...options
+const normUser = u => ({
+  ...u,
+  estado: u.estado === true ? 'Activo' : u.estado === false ? 'Inactivo' : (u.estado || 'Activo')
+});
+
+async function apiFetch(path, opts = {}) {
+
+  const res = await fetch(API_BASE + path, {
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    ...opts
   });
+
   if (res.status === 204) return null;
-  const text = await res.text();
-  if (!res.ok) throw new Error(text || `Error ${res.status}`);
-  return text ? JSON.parse(text) : null;
+
+  const txt = await res.text();
+
+  if (!res.ok) {
+    throw new Error(txt || `Error ${res.status}`);
+  }
+
+  return txt ? JSON.parse(txt) : null;
 }
 
-// ============================================================
-//  INICIALIZACIÓN
-// ============================================================
+// ── Inicio ────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', async () => {
   await Promise.all([loadProductos(), loadUsuarios()]);
   updateDashboard();
 });
 
-// ============================================================
-//  PRODUCTOS — CARGA
-//  Siempre arranca con los datos quemados.
-//  Si el backend responde, se agregan sus registros al final.
-// ============================================================
+// ── PRODUCTOS ─────────────────────────────────────────────
 async function loadProductos() {
-  // 1. Cargar datos quemados inmediatamente
   products = [...PRODUCTOS_BASE];
-
   try {
-    const apiData = await apiFetch('/productos');
+    const api = await apiFetch('/productos');
     apiOnline = true;
-    // Agregar al final los productos creados desde el backend
-    // (evitar duplicar los quemados comparando por nombre+categoria)
-    apiData.forEach(ap => {
-      const yaExiste = products.some(
-        p => p.nombre === ap.nombre && p.categoria === ap.categoria
-      );
-      if (!yaExiste) products.push(ap);
+    api.forEach(p => {
+      if (!products.some(b => b.nombre === p.nombre && b.categoria === p.categoria))
+        products.push(p);
     });
-    showBanner(true, products.length, PRODUCTOS_BASE.length);
+    showBanner(true, products.length);
   } catch {
     apiOnline = false;
-    showBanner(false, products.length, PRODUCTOS_BASE.length);
+    showBanner(false, products.length);
   }
-
   renderTable(products);
 }
 
-function showBanner(online, total, base) {
-  const b = document.getElementById('apiBanner');
+function showBanner(online, total) {
+  const b = $('apiBanner');
   b.style.display = 'block';
   if (online) {
-    b.style.background = '#D1FAE5';
-    b.style.color = '#065F46';
-    b.textContent = `✅ Conectado al servidor Java. Mostrando ${base} productos base + ${total - base} del backend.`;
+    Object.assign(b.style, { background:'#D1FAE5', color:'#065F46' });
+    b.textContent = `✅ Conectado al servidor Java. ${PRODUCTOS_BASE.length} base + ${total - PRODUCTOS_BASE.length} del backend.`;
   } else {
-    b.style.background = '#FEF3C7';
-    b.style.color = '#92400E';
-    b.textContent = `⚠️ Backend no disponible. Mostrando ${base} productos base en modo local.`;
+    Object.assign(b.style, { background:'#FEF3C7', color:'#92400E' });
+    b.textContent = `⚠️ Backend no disponible. Mostrando ${PRODUCTOS_BASE.length} productos en modo local.`;
   }
-  const st = document.getElementById('apiStatus');
-  if (st) st.textContent = online ? '🟢 En línea' : '🔴 Sin conexión';
 }
 
-// ============================================================
-//  RENDER TABLA PRODUCTOS
-// ============================================================
-const catClass = {
-  'Fútbol':'futbol','Baloncesto':'baloncesto','Tenis':'tenis',
-  'Running':'running','Natación':'natacion','Gimnasio':'gimnasio',
-  'Ciclismo':'ciclismo','Accesorios':'accesorios'
+const CAT_CLASS = {
+  'Fútbol':'futbol','Baloncesto':'baloncesto','Tenis':'tenis','Running':'running',
+  'Natación':'natacion','Gimnasio':'gimnasio','Ciclismo':'ciclismo','Accesorios':'accesorios'
 };
-function qtyClass(q) { return q >= 50 ? 'green' : q >= 25 ? 'orange' : 'red'; }
+const qtyClass = q => q >= 50 ? 'green' : q >= 25 ? 'orange' : 'red';
 
 function renderTable(data) {
-  const tbody = document.getElementById('tableBody');
-  if (!data || data.length === 0) {
-    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:#9CA3AF;padding:32px;">No hay productos registrados.</td></tr>';
-    document.getElementById('tableFooter').textContent = 'Sin productos';
-    return;
-  }
-  tbody.innerHTML = data.map(p => `
-    <tr>
-      <td class="code">${p.id}</td>
-      <td>${p.nombre}</td>
-      <td><span class="badge ${catClass[p.categoria] || ''}">${p.categoria || '—'}</span></td>
-      <td><span class="qty ${qtyClass(p.stock)}">${p.stock} unidades</span></td>
-      <td class="price">$${Number(p.precio).toFixed(2)}</td>
-      <td class="actions">
-        <button class="btn-icon" title="Editar" onclick="openEditModal('${p.id}')">✏️</button>
-        <button class="btn-icon" title="Eliminar" onclick="openDeleteModal('${p.id}')">🗑️</button>
-      </td>
-    </tr>`).join('');
-  document.getElementById('tableFooter').textContent =
-    `Mostrando ${data.length} de ${products.length} productos`;
+  $('tableBody').innerHTML = data.length
+    ? data.map(p => `
+        <tr>
+          <td class="code">${p.id}</td>
+          <td>${p.nombre}</td>
+          <td><span class="badge ${CAT_CLASS[p.categoria]||''}">${p.categoria||'—'}</span></td>
+          <td><span class="qty ${qtyClass(p.stock)}">${p.stock} unidades</span></td>
+          <td class="price">$${Number(p.precio).toFixed(2)}</td>
+          <td class="actions">
+            <button class="btn-icon" onclick="openEditModal('${p.id}')">✏️</button>
+            <button class="btn-icon" onclick="openDeleteModal('${p.id}')">🗑️</button>
+          </td>
+        </tr>`).join('')
+    : '<tr><td colspan="6" style="text-align:center;color:#9CA3AF;padding:32px;">No hay productos registrados.</td></tr>';
+  $('tableFooter').textContent = `Mostrando ${data.length} de ${products.length} productos`;
 }
 
 function filterTable() {
-  const q = document.getElementById('searchInput').value.toLowerCase();
+  const q = $('searchInput').value.toLowerCase();
   renderTable(products.filter(p =>
-    String(p.id).toLowerCase().includes(q) ||
-    (p.nombre || '').toLowerCase().includes(q) ||
-    (p.categoria || '').toLowerCase().includes(q)
+    [p.id, p.nombre, p.categoria].some(v => String(v||'').toLowerCase().includes(q))
   ));
 }
 
-// ============================================================
-//  MODAL PRODUCTO
-// ============================================================
-function openModal() {
-  editProductId = null;
-  document.getElementById('modalTitle').textContent = 'Registrar Nuevo Artículo';
-  document.getElementById('btnGuardar').textContent = 'Guardar Producto';
-  ['mNombre','mCategoria','mCantidad','mPrecio','mDesc'].forEach(id =>
-    document.getElementById(id).value = '');
-  document.getElementById('modalOverlay').classList.add('open');
+function openModal(p = null) {
+  editProductId       = p ? p.id : null;
+  $('modalTitle').textContent = p ? 'Editar Artículo'     : 'Registrar Nuevo Artículo';
+  $('btnGuardar').textContent = p ? 'Actualizar Producto' : 'Guardar Producto';
+  $('mNombre').value    = p?.nombre    || '';
+  $('mCategoria').value = p?.categoria || '';
+  $('mCantidad').value  = p?.stock     || '';
+  $('mPrecio').value    = p?.precio    || '';
+  $('modalOverlay').classList.add('open');
 }
+function openEditModal(id) { openModal(products.find(p => String(p.id) === String(id))); }
+function closeModal()      { $('modalOverlay').classList.remove('open'); editProductId = null; }
 
-function openEditModal(id) {
-  const p = products.find(x => String(x.id) === String(id));
-  if (!p) return;
-  editProductId = id;
-  document.getElementById('modalTitle').textContent = 'Editar Artículo';
-  document.getElementById('btnGuardar').textContent = 'Actualizar Producto';
-  document.getElementById('mNombre').value    = p.nombre;
-  document.getElementById('mCategoria').value = p.categoria || '';
-  document.getElementById('mCantidad').value  = p.stock;
-  document.getElementById('mPrecio').value    = p.precio;
-  document.getElementById('mDesc').value      = p.descripcion || '';
-  document.getElementById('modalOverlay').classList.add('open');
-}
-
-function closeModal() {
-  document.getElementById('modalOverlay').classList.remove('open');
-  editProductId = null;
-}
-
-// ============================================================
-//  GUARDAR PRODUCTO
-// ============================================================
 async function saveProduct() {
-  const nombre      = document.getElementById('mNombre').value.trim();
-  const categoria   = document.getElementById('mCategoria').value;
-  const stock       = parseInt(document.getElementById('mCantidad').value);
-  const precio      = parseFloat(document.getElementById('mPrecio').value);
-  const descripcion = document.getElementById('mDesc').value.trim();
+  const nombre = $('mNombre').value.trim(), categoria = $('mCategoria').value;
+  const stock  = parseInt($('mCantidad').value), precio = parseFloat($('mPrecio').value);
+  if (!nombre || !categoria || isNaN(stock) || isNaN(precio))
+    return alert('Completa todos los campos obligatorios.');
 
-  if (!nombre || !categoria || isNaN(stock) || isNaN(precio)) {
-    alert('Por favor completa todos los campos obligatorios.');
-    return;
-  }
+  const body = { nombre, categoria, stock, precio };
 
-  const body = { nombre, categoria, stock, precio, descripcion };
-
-  if (editProductId !== null) {
-    // ---- EDITAR ----
-    const esLocal = String(editProductId).startsWith('L');
-    if (esLocal) {
-      // Producto quemado: editar solo en memoria
-      products = products.map(p =>
-        String(p.id) === String(editProductId)
-          ? { ...p, nombre, categoria, stock, precio, descripcion }
-          : p
-      );
+  if (editProductId) {
+    if (esLocal(editProductId)) {
+      products = products.map(p => String(p.id) === String(editProductId) ? {...p, nombre, categoria, stock, precio} : p);
     } else {
-      // Producto del backend: PUT a la API
       try {
-        const updated = await apiFetch(`/productos/${editProductId}`, {
-          method: 'PUT', body: JSON.stringify(body)
-        });
-        products = products.map(p =>
-          String(p.id) === String(editProductId) ? updated : p
-        );
-      } catch (err) {
-        // Si falla la API, editar igualmente en memoria
-        products = products.map(p =>
-          String(p.id) === String(editProductId)
-            ? { ...p, nombre, categoria, stock, precio, descripcion }
-            : p
-        );
+        const u = await apiFetch(`/productos/${editProductId}`, { method:'PUT', body:JSON.stringify(body) });
+        products = products.map(p => String(p.id) === String(editProductId) ? u : p);
+      } catch {
+        products = products.map(p => String(p.id) === String(editProductId) ? {...p, nombre, categoria, stock, precio} : p);
       }
     }
   } else {
-    // ---- CREAR ----
-    if (apiOnline) {
-      try {
-        const created = await apiFetch('/productos', {
-          method: 'POST', body: JSON.stringify(body)
-        });
-        products.push(created);
-      } catch {
-        // Si falla, agregar localmente con ID temporal
-        const tmpId = 'L' + String(Date.now()).slice(-4);
-        products.push({ id: tmpId, nombre, categoria, stock, precio, descripcion });
-      }
-    } else {
-      // Sin backend: agregar con ID local
-      const tmpId = 'L' + String(Date.now()).slice(-4);
-      products.push({ id: tmpId, nombre, categoria, stock, precio, descripcion });
+    try {
+      if (!apiOnline) throw '';
+      products.push(await apiFetch('/productos', { method:'POST', body:JSON.stringify(body) }));
+    } catch {
+      products.push({ id:'L'+Date.now().toString().slice(-4), nombre, categoria, stock, precio });
     }
   }
-
-  renderTable(products);
-  updateDashboard();
-  closeModal();
+  renderTable(products); updateDashboard(); closeModal();
 }
 
-// ============================================================
-//  ELIMINAR PRODUCTO
-// ============================================================
 function openDeleteModal(id) {
   deleteProductId = id;
   const p = products.find(x => String(x.id) === String(id));
-  document.getElementById('deleteProductName').textContent =
-    `"${p ? p.nombre : ''}" será eliminado permanentemente.`;
-  document.getElementById('deleteModalOverlay').classList.add('open');
+  $('deleteProductName').textContent = `"${p?.nombre}" será eliminado permanentemente.`;
+  $('deleteModalOverlay').classList.add('open');
 }
-function closeDeleteModal() {
-  document.getElementById('deleteModalOverlay').classList.remove('open');
-  deleteProductId = null;
-}
+function closeDeleteModal() { $('deleteModalOverlay').classList.remove('open'); deleteProductId = null; }
+
 async function confirmDelete() {
-  if (deleteProductId === null) return;
-  const esLocal = String(deleteProductId).startsWith('L');
-  if (!esLocal && apiOnline) {
-    try {
-      await apiFetch(`/productos/${deleteProductId}`, { method: 'DELETE' });
-    } catch { /* si falla, se elimina igual de la vista */ }
-  }
+  if (!esLocal(deleteProductId) && apiOnline)
+    try { await apiFetch(`/productos/${deleteProductId}`, { method:'DELETE' }); } catch {}
   products = products.filter(p => String(p.id) !== String(deleteProductId));
-  renderTable(products);
-  updateDashboard();
-  closeDeleteModal();
+  renderTable(products); updateDashboard(); closeDeleteModal();
 }
 
-// ============================================================
-//  USUARIOS — CARGA
-// ============================================================
+// ── USUARIOS ──────────────────────────────────────────────
 async function loadUsuarios() {
   users = [...USUARIOS_BASE];
-
   try {
-    const apiData = await apiFetch('/usuarios');
-    apiData.forEach(au => {
-      const yaExiste = users.some(
-        u => u.correo === au.correo
-      );
-      if (!yaExiste) users.push(au);
+    const api = await apiFetch('/usuarios');
+    api.forEach(u => {
+      const n = normUser(u);
+      if (!users.some(x => x.correo === n.correo)) users.push(n);
     });
-  } catch { /* sin backend, solo datos quemados */ }
-
+  } catch { /* sin backend, solo datos base */ }
   renderUsers();
 }
 
-// ============================================================
-//  RENDER USUARIOS
-// ============================================================
+const esAdmin = rol => rol === 'Administrador' || rol === 'admin';
+
 function renderUsers() {
-  const list = document.getElementById('userList');
-  if (!users || users.length === 0) {
-    list.innerHTML = '<p style="color:#9CA3AF;padding:16px;">No hay usuarios registrados.</p>';
-  } else {
-    list.innerHTML = users.map(u => `
-      <div class="user-card">
-        <div class="avatar">${u.nombre.charAt(0)}</div>
-        <div class="user-info">
-          <strong>${u.nombre}</strong>
-          <span>${u.correo}</span>
-        </div>
-        <div class="tags">
-          <span class="tag ${u.rol === 'Administrador' ? 'admin' : ''}">${u.rol || '—'}</span>
-          <span class="tag ${u.estado === 'Activo' ? 'activo' : ''}">${u.estado || '—'}</span>
-        </div>
-        <div class="actions" style="margin-left:auto;">
-          <button class="btn-icon" title="Editar" onclick="openEditUserModal('${u.id}')">✏️</button>
-          <button class="btn-icon" title="Eliminar" onclick="openDeleteUserModal('${u.id}')">🗑️</button>
-        </div>
-      </div>`).join('');
-  }
-  document.getElementById('totalUsuarios').textContent = users.length;
-  document.getElementById('totalAdmins').textContent   = users.filter(u => u.rol === 'Administrador').length;
-  document.getElementById('totalActivos').textContent  = users.filter(u => u.estado === 'Activo').length;
+  $('userList').innerHTML = users.length
+    ? users.map(u => `
+        <div class="user-card">
+          <div class="avatar">${u.nombre.charAt(0)}</div>
+          <div class="user-info"><strong>${u.nombre}</strong><span>${u.correo}</span></div>
+          <div class="tags">
+            <span class="tag ${esAdmin(u.rol)?'admin':''}">${u.rol||'—'}</span>
+            <span class="tag ${u.estado==='Activo'?'activo':''}">${u.estado||'—'}</span>
+          </div>
+          <div class="actions" style="margin-left:auto;">
+            <button class="btn-icon" onclick="openEditUserModal('${u.id}')">✏️</button>
+            <button class="btn-icon" onclick="openDeleteUserModal('${u.id}')">🗑️</button>
+          </div>
+        </div>`).join('')
+    : '<p style="color:#9CA3AF;padding:16px;">No hay usuarios registrados.</p>';
+
+  set('totalUsuarios', users.length);
+  set('totalAdmins',   users.filter(u => esAdmin(u.rol)).length);
+  set('totalActivos',  users.filter(u => u.estado === 'Activo').length);
 }
 
-// ============================================================
-//  MODAL USUARIO
-// ============================================================
-function openUserModal() {
-  editUserId = null;
-  document.getElementById('userModalTitle').textContent    = 'Agregar Nuevo Usuario';
-  document.getElementById('btnGuardarUsuario').textContent = 'Guardar Usuario';
-  ['uNombre','uEmail','uRol'].forEach(id => document.getElementById(id).value = '');
-  document.getElementById('uEstado').value = 'Activo';
-  document.getElementById('userModalOverlay').classList.add('open');
+function openUserModal(u = null) {
+  editUserId = u ? u.id : null;
+  $('userModalTitle').textContent    = u ? 'Editar Usuario'    : 'Agregar Nuevo Usuario';
+  $('btnGuardarUsuario').textContent = u ? 'Actualizar Usuario': 'Guardar Usuario';
+  $('uNombre').value   = u?.nombre || '';
+  $('uEmail').value    = u?.correo || '';
+  $('uEdad').value     = u?.edad   || '';
+  $('uPassword').value = '';
+  $('uRol').value      = u?.rol    || '';
+  $('uEstado').value   = u?.estado || 'Activo';
+  $('userModalOverlay').classList.add('open');
 }
+function openEditUserModal(id) { openUserModal(users.find(u => String(u.id) === String(id))); }
+function closeUserModal()      { $('userModalOverlay').classList.remove('open'); editUserId = null; }
 
-function openEditUserModal(id) {
-  const u = users.find(x => String(x.id) === String(id));
-  if (!u) return;
-  editUserId = id;
-  document.getElementById('userModalTitle').textContent    = 'Editar Usuario';
-  document.getElementById('btnGuardarUsuario').textContent = 'Actualizar Usuario';
-  document.getElementById('uNombre').value  = u.nombre;
-  document.getElementById('uEmail').value   = u.correo;
-  document.getElementById('uRol').value     = u.rol || '';
-  document.getElementById('uEstado').value  = u.estado || 'Activo';
-  document.getElementById('userModalOverlay').classList.add('open');
-}
-
-function closeUserModal() {
-  document.getElementById('userModalOverlay').classList.remove('open');
-  editUserId = null;
-}
-
-// ============================================================
-//  GUARDAR USUARIO
-// ============================================================
 async function saveUser() {
-  const nombre = document.getElementById('uNombre').value.trim();
-  const correo = document.getElementById('uEmail').value.trim();
-  const rol    = document.getElementById('uRol').value;
-  const estado = document.getElementById('uEstado').value;
+  const nombre = $('uNombre').value.trim(), correo = $('uEmail').value.trim();
+  if (!nombre || !correo) return alert('Nombre y correo son obligatorios.');
+  const edad      = parseInt($('uEdad').value) || 0;
+  const rol       = $('uRol').value;
+  const estadoStr = $('uEstado').value;
+  const password  = $('uPassword').value.trim();
+  const body = { nombre, correo, edad, rol, estado: estadoStr === 'Activo', contraseña: password };
 
-  if (!nombre || !correo) {
-    alert('Nombre y correo son obligatorios.');
-    return;
-  }
-
-  const body = { nombre, correo, rol, estado };
-
-  if (editUserId !== null) {
-    const esLocal = String(editUserId).startsWith('U');
-    if (esLocal) {
-      users = users.map(u =>
-        String(u.id) === String(editUserId)
-          ? { ...u, nombre, correo, rol, estado }
-          : u
-      );
+  if (editUserId) {
+    if (esLocal(editUserId)) {
+      users = users.map(u => String(u.id) === String(editUserId) ? {...u, nombre, correo, edad, rol, estado:estadoStr} : u);
     } else {
       try {
-        const updated = await apiFetch(`/usuarios/${editUserId}`, {
-          method: 'PUT', body: JSON.stringify(body)
-        });
-        users = users.map(u =>
-          String(u.id) === String(editUserId) ? updated : u
-        );
+        const upd = await apiFetch(`/usuarios/${editUserId}`, { method:'PUT', body:JSON.stringify(body) });
+        users = users.map(u => String(u.id) === String(editUserId) ? normUser(upd) : u);
       } catch {
-        users = users.map(u =>
-          String(u.id) === String(editUserId)
-            ? { ...u, nombre, correo, rol, estado }
-            : u
-        );
+        users = users.map(u => String(u.id) === String(editUserId) ? {...u, nombre, correo, edad, rol, estado:estadoStr} : u);
       }
     }
   } else {
-    if (apiOnline) {
-      try {
-        const created = await apiFetch('/usuarios', {
-          method: 'POST', body: JSON.stringify(body)
-        });
-        users.push(created);
-      } catch {
-        const tmpId = 'U' + String(Date.now()).slice(-4);
-        users.push({ id: tmpId, nombre, correo, rol, estado });
-      }
-    } else {
-      const tmpId = 'U' + String(Date.now()).slice(-4);
-      users.push({ id: tmpId, nombre, correo, rol, estado });
+    try {
+      if (!apiOnline) throw '';
+      users.push(normUser(await apiFetch('/usuarios', { method:'POST', body:JSON.stringify(body) })));
+    } catch {
+      users.push({ id:'U'+Date.now().toString().slice(-4), nombre, correo, edad, rol, estado:estadoStr });
     }
   }
-
-  renderUsers();
-  updateDashboard();
-  closeUserModal();
+  renderUsers(); updateDashboard(); closeUserModal();
 }
 
-// ============================================================
-//  ELIMINAR USUARIO
-// ============================================================
 function openDeleteUserModal(id) {
   deleteUserId = id;
   const u = users.find(x => String(x.id) === String(id));
-  document.getElementById('deleteUserName').textContent =
-    `"${u ? u.nombre : ''}" será eliminado permanentemente.`;
-  document.getElementById('deleteUserModalOverlay').classList.add('open');
+  $('deleteUserName').textContent = `"${u?.nombre}" será eliminado permanentemente.`;
+  $('deleteUserModalOverlay').classList.add('open');
 }
-function closeDeleteUserModal() {
-  document.getElementById('deleteUserModalOverlay').classList.remove('open');
-  deleteUserId = null;
-}
+function closeDeleteUserModal() { $('deleteUserModalOverlay').classList.remove('open'); deleteUserId = null; }
+
 async function confirmDeleteUser() {
-  if (deleteUserId === null) return;
-  const esLocal = String(deleteUserId).startsWith('U');
-  if (!esLocal && apiOnline) {
-    try {
-      await apiFetch(`/usuarios/${deleteUserId}`, { method: 'DELETE' });
-    } catch { /* eliminar igual de la vista */ }
-  }
+  if (!esLocal(deleteUserId) && apiOnline)
+    try { await apiFetch(`/usuarios/${deleteUserId}`, { method:'DELETE' }); } catch {}
   users = users.filter(u => String(u.id) !== String(deleteUserId));
-  renderUsers();
-  updateDashboard();
-  closeDeleteUserModal();
+  renderUsers(); updateDashboard(); closeDeleteUserModal();
 }
-//
-// ============================================================
-//  DASHBOARD — ESTADÍSTICAS EN TIEMPO REAL
-// ============================================================
+
+// ── DASHBOARD ─────────────────────────────────────────────
 function updateDashboard() {
   const totalStock = products.reduce((s, p) => s + Number(p.stock), 0);
-  const bajo       = products.filter(p => Number(p.stock) < 25).length;
-  const valor      = products.reduce((s, p) => s + (Number(p.stock) * Number(p.precio)), 0);
-  const top        = [...products].sort((a, b) => Number(b.stock) - Number(a.stock)).slice(0, 4);
+  const bajo       = products.filter(p => p.stock < 25).length;
+  const valor      = products.reduce((s, p) => s + p.stock * p.precio, 0);
 
-  document.getElementById('statTotalProductos').textContent  = products.length;
-  document.getElementById('statStockTotal').textContent      = `${totalStock} unidades en total`;
-  document.getElementById('statTotalUsuarios').textContent   = users.length;
-  document.getElementById('statUsuariosActivos').textContent = `${users.filter(u => u.estado === 'Activo').length} activos`;
-  document.getElementById('statStockBajo').textContent       = bajo;
-  document.getElementById('statStockBajoTxt').textContent    = bajo > 0 ? '⚠️ Requiere atención' : '✅ Stock saludable';
-  document.getElementById('statValorTotal').textContent      = '$' + valor.toFixed(2);
+  set('statTotalProductos',  products.length);
+  set('statStockTotal',      `${totalStock} unidades en total`);
+  set('statTotalUsuarios',   users.length);
+  set('statUsuariosActivos', `${users.filter(u => u.estado==='Activo').length} activos`);
+  set('statStockBajo',       bajo);
+  set('statStockBajoTxt',    bajo > 0 ? '⚠️ Requiere atención' : '✅ Stock saludable');
+  set('statValorTotal',      '$' + valor.toFixed(2));
 
-  document.getElementById('topProductos').innerHTML = top.map((p, i) => `
-    <div class="product-row">
-      <div class="rank">${i + 1}</div>
-      <div class="product-info"><strong>${p.nombre}</strong><span>${p.categoria || '—'}</span></div>
-      <div class="product-qty">${p.stock}<small>unidades</small></div>
-    </div>`).join('');
+  // ── Resumen de Actividad (valores dinámicos) ──
+  set('actProductos', products.length);
+  set('actAlertas',   bajo);
+
+  $('topProductos').innerHTML = [...products]
+    .sort((a, b) => b.stock - a.stock).slice(0, 5)
+    .map((p, i) => `
+      <div class="product-row">
+        <div class="rank">${i+1}</div>
+        <div class="product-info"><strong>${p.nombre}</strong><span>${p.categoria||'—'}</span></div>
+        <div class="product-qty">${p.stock}<small>unidades</small></div>
+      </div>`).join('');
 }
 
-// ============================================================
-//  NAVEGACIÓN
-// ============================================================
+// ── NAVEGACIÓN ────────────────────────────────────────────
 function showPage(page) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-  document.getElementById('page-' + page).classList.add('active');
-  document.getElementById('nav-' + page).classList.add('active');
+  $('page-' + page)?.classList.add('active');
+  $('nav-'  + page)?.classList.add('active');
 }
 
-// Cerrar modales al hacer clic fuera
-['modalOverlay','userModalOverlay','deleteModalOverlay','deleteUserModalOverlay'].forEach(id => {
-  document.getElementById(id).addEventListener('click', function(e) {
-    if (e.target === this) this.classList.remove('open');
-  });
-});
+['modalOverlay','userModalOverlay','deleteModalOverlay','deleteUserModalOverlay'].forEach(id =>
+  $(id).addEventListener('click', e => { if (e.target === $(id)) $(id).classList.remove('open'); })
+);
 </script>
 </body>
 </html>
